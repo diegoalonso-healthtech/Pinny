@@ -8,8 +8,8 @@ enum PickerMode {
     var title: String {
         switch self {
         case .all: return "Pinny"
-        case .pinned: return "Pinny · Pines"
-        case .recent: return "Pinny · Recientes"
+        case .pinned: return L("Pinny · Pins")
+        case .recent: return L("Pinny · Recent")
         }
     }
 }
@@ -52,14 +52,14 @@ struct PickerView: View {
             }
             let loose = store.pinned(in: nil).filter(matches)
             if !loose.isEmpty {
-                result.append(PickerGroup(id: "pins", title: "Pines", folder: nil, items: loose))
+                result.append(PickerGroup(id: "pins", title: L("Pins"), folder: nil, items: loose))
             }
         }
 
         if mode != .pinned {
             let recent = store.recent.filter(matches)
             if !recent.isEmpty {
-                result.append(PickerGroup(id: "recent", title: "Recientes", folder: nil, items: recent))
+                result.append(PickerGroup(id: "recent", title: L("Recent"), folder: nil, items: recent))
             }
         }
         return result
@@ -73,7 +73,7 @@ struct PickerView: View {
         )
 
         VStack(spacing: 0) {
-            TextField("Buscar…", text: $query)
+            TextField(L("Search…"), text: $query)
                 .textFieldStyle(.roundedBorder)
                 .padding(8)
                 .focused($searchFocused)
@@ -83,7 +83,7 @@ struct PickerView: View {
 
             if groups.isEmpty {
                 Spacer()
-                Text("No hay elementos")
+                Text(L("No items"))
                     .foregroundStyle(.secondary)
                 Spacer()
             } else {
@@ -106,13 +106,13 @@ struct PickerView: View {
             }
 
             HStack {
-                Button("Nueva carpeta…") {
-                    if let name = Prompt.text(title: "Nueva carpeta", message: "Nombre de la carpeta:") {
+                Button(L("New folder…")) {
+                    if let name = Prompt.text(title: L("New folder"), message: L("Folder name:")) {
                         store.addFolder(name)
                     }
                 }
                 Spacer()
-                Button("Cancelar", action: onCancel)
+                Button(L("Cancel"), action: onCancel)
                     .keyboardShortcut(.cancelAction)
             }
             .padding(8)
@@ -166,12 +166,12 @@ struct PickerView: View {
             if let folder = group.folder {
                 Spacer()
                 Menu {
-                    Button("Renombrar…") {
-                        if let name = Prompt.text(title: "Renombrar carpeta", message: "Nuevo nombre:", initial: folder.name) {
+                    Button(L("Rename…")) {
+                        if let name = Prompt.text(title: L("Rename folder"), message: L("New name:"), initial: folder.name) {
                             store.renameFolder(folder.id, to: name)
                         }
                     }
-                    Button("Eliminar carpeta (los pines se conservan)", role: .destructive) {
+                    Button(L("Delete folder (pins are kept)"), role: .destructive) {
                         store.deleteFolder(folder.id)
                     }
                 } label: {
@@ -206,20 +206,20 @@ struct PickerView: View {
                 Image(systemName: item.pinned ? "pin.fill" : "pin")
             }
             .buttonStyle(.borderless)
-            .help(item.pinned ? "Desanclar" : "Anclar")
+            .help(item.pinned ? L("Unpin") : L("Pin"))
 
             Menu {
                 if item.pinned {
-                    Button("Subir") { store.movePin(item.id, up: true) }
-                    Button("Bajar") { store.movePin(item.id, up: false) }
-                    Menu("Mover a carpeta") {
-                        Button("Sin carpeta") { store.setFolder(item.id, nil) }
+                    Button(L("Move up")) { store.movePin(item.id, up: true) }
+                    Button(L("Move down")) { store.movePin(item.id, up: false) }
+                    Menu(L("Move to folder")) {
+                        Button(L("No folder")) { store.setFolder(item.id, nil) }
                         ForEach(store.folders) { folder in
                             Button(folder.name) { store.setFolder(item.id, folder.id) }
                         }
                         Divider()
-                        Button("Nueva carpeta…") {
-                            if let name = Prompt.text(title: "Nueva carpeta", message: "Nombre de la carpeta:") {
+                        Button(L("New folder…")) {
+                            if let name = Prompt.text(title: L("New folder"), message: L("Folder name:")) {
                                 let id = store.addFolder(name)
                                 store.setFolder(item.id, id)
                             }
@@ -227,12 +227,12 @@ struct PickerView: View {
                     }
                     Divider()
                 }
-                Button("Eliminar", role: .destructive) {
+                Button(L("Delete"), role: .destructive) {
                     // Los pines piden confirmación: son los datos que quieres conservar.
                     if !item.pinned || Prompt.confirm(
-                        title: "¿Eliminar este pin?",
+                        title: L("Delete this pin?"),
                         message: PopupMenu.label(item.text),
-                        action: "Eliminar"
+                        action: L("Delete")
                     ) {
                         store.delete(item.id)
                     }

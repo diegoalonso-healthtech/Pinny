@@ -13,7 +13,7 @@
 
 Pinny es un gestor de portapapeles gratuito y de código abierto **solo para macOS** (no funciona en Windows, Linux, iPhone ni iPad). Guarda tu historial de copias, te deja **anclar** lo importante, ordenar los pines en **carpetas** y pegarlos en cualquier app desde un menú rápido, un buscador o el clic derecho.
 
-> Versión **1.0.0**. Solo texto. Sincronización cifrada e interfaz en inglés, previstas para próximas versiones.
+> Versión **1.1.0**. En **español e inglés** (sigue el idioma de tu Mac). Por ahora solo texto; la sincronización cifrada llegará en una próxima versión.
 
 <p align="center"><img src="docs/images/quick-menu.png" alt="Menú rápido de Pinny: Pines › carpeta Trabajo › texto guardado, abierto con Control-Opción-V en una ventana de correo" width="760"></p>
 

@@ -205,18 +205,10 @@ final class ClipStore: ObservableObject {
         if let data = try? Data(contentsOf: backupURL), let file = Self.decode(data) {
             items = file.items
             folders = file.folders
-            recoveryMessage = """
-            No se pudo leer el archivo de datos y se ha recuperado la última copia de seguridad.
-            El archivo dañado se ha conservado en:
-            \(corruptURL.path)
-            """
+            recoveryMessage = L("Your data file couldn’t be read, so the latest backup was restored.\nThe damaged file was kept at:\n%@", corruptURL.path)
             flush()
         } else {
-            recoveryMessage = """
-            No se pudo leer el archivo de datos y no hay una copia de seguridad válida. Pinny empieza vacío.
-            El archivo dañado se ha conservado en:
-            \(corruptURL.path)
-            """
+            recoveryMessage = L("Your data file couldn’t be read and there’s no valid backup, so Pinny starts empty.\nThe damaged file was kept at:\n%@", corruptURL.path)
         }
     }
 

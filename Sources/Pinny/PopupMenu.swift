@@ -35,7 +35,7 @@ enum PopupMenu {
                 sub.addItem(entry(pin.text, onSelect))
             }
             if folderPins.isEmpty {
-                sub.addItem(placeholder("(carpeta vacía)"))
+                sub.addItem(placeholder(L("(empty folder)")))
             }
             let folderItem = NSMenuItem(title: "📁 \(folder.name)", action: nil, keyEquivalent: "")
             folderItem.submenu = sub
@@ -45,9 +45,9 @@ enum PopupMenu {
             pinsMenu.addItem(entry(pin.text, onSelect))
         }
         if pinsMenu.items.isEmpty {
-            pinsMenu.addItem(placeholder("Sin pines"))
+            pinsMenu.addItem(placeholder(L("No pins")))
         }
-        let pinsItem = NSMenuItem(title: "Pines", action: nil, keyEquivalent: "")
+        let pinsItem = NSMenuItem(title: L("Pins"), action: nil, keyEquivalent: "")
         pinsItem.submenu = pinsMenu
 
         // Recientes
@@ -57,9 +57,9 @@ enum PopupMenu {
             recentMenu.addItem(entry(item.text, onSelect))
         }
         if recents.isEmpty {
-            recentMenu.addItem(placeholder("Historial vacío"))
+            recentMenu.addItem(placeholder(L("History is empty")))
         }
-        let recentItem = NSMenuItem(title: "Recientes", action: nil, keyEquivalent: "")
+        let recentItem = NSMenuItem(title: L("Recent"), action: nil, keyEquivalent: "")
         recentItem.submenu = recentMenu
 
         return [pinsItem, recentItem]
@@ -77,10 +77,10 @@ enum PopupMenu {
         }
 
         menu.addItem(.separator())
-        menu.addItem(ActionMenuItem(title: "Buscar en todo…") {
+        menu.addItem(ActionMenuItem(title: L("Search everything…")) {
             Task { @MainActor in Paster.pickAndPaste(mode: .all) }
         })
-        menu.addItem(ActionMenuItem(title: "Ajustes…") {
+        menu.addItem(ActionMenuItem(title: L("Settings…")) {
             Task { @MainActor in SettingsWindow.show() }
         })
 

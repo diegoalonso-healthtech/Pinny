@@ -33,7 +33,7 @@ enum WelcomeWindow {
                 backing: .buffered,
                 defer: false
             )
-            newWindow.title = "Configurar Pinny"
+            newWindow.title = L("Set up Pinny")
             newWindow.isReleasedWhenClosed = false
             newWindow.contentView = NSHostingView(rootView: WelcomeView {
                 WelcomeWindow.finish()
@@ -151,12 +151,7 @@ private struct WelcomeView: View {
     @State private var showHelp = false
 
     /// Frase de prueba, en el idioma del sistema.
-    private let testPhrase: String = {
-        let language = Locale.preferredLanguages.first ?? "es"
-        return language.hasPrefix("es")
-            ? "Ninguna chincheta sufrió daños durante este texto 📌"
-            : "No pins were harmed in the making of this text 📌"
-    }()
+    private let testPhrase = L("No pins were harmed in the making of this text 📌")
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -166,23 +161,23 @@ private struct WelcomeView: View {
                     .resizable()
                     .frame(width: 56, height: 56)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Bienvenido a Pinny")
+                    Text(L("Welcome to Pinny"))
                         .font(.title2.bold())
-                    Text("Tres pasos y a pegar.")
+                    Text(L("Three steps and you’re pasting."))
                         .foregroundStyle(.secondary)
                 }
             }
 
             step(
                 number: 1,
-                title: "Permitir que Pinny pegue por ti",
-                text: "Para pegar en cualquier app con \(settings.menuHotKey.name) o con el clic derecho. Pulsa el botón, elige «Abrir Ajustes del Sistema» en el aviso de macOS y activa Pinny.",
+                title: L("Let Pinny paste for you"),
+                text: L("To paste into any app with %@ or right-click. Click the button, choose “Open System Settings” in the macOS prompt and turn Pinny on.", settings.menuHotKey.name),
                 done: accessibilityGranted,
-                buttonTitle: "Dar permiso…",
+                buttonTitle: L("Grant permission…"),
                 action: WelcomeWindow.requestAccessibility,
                 links: [
-                    ("Si no aparece el aviso: abrir Ajustes del Sistema", WelcomeWindow.openSystemSettings),
-                    ("¿Está activado y no funciona? Reparar permiso", WelcomeWindow.repairAccessibility)
+                    (L("No prompt? Open System Settings"), WelcomeWindow.openSystemSettings),
+                    (L("Turned on but not working? Repair permission"), WelcomeWindow.repairAccessibility)
                 ]
             )
 
@@ -195,12 +190,12 @@ private struct WelcomeView: View {
             Divider()
 
             HStack(alignment: .top) {
-                Text("Pinny también aparece en clic derecho → Servicios, en las apps compatibles. Puedes volver a esta guía desde el icono de la barra de menús.")
+                Text(L("Pinny also appears in right-click → Services in compatible apps. You can reopen this guide from the menu bar icon."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 Spacer()
-                Button("Hecho", action: onDone)
+                Button(L("Done"), action: onDone)
                     .keyboardShortcut(.defaultAction)
             }
         }
@@ -216,22 +211,22 @@ private struct WelcomeView: View {
         HStack(alignment: .top, spacing: 12) {
             badge(number: 2, done: settings.rightClickMenuEnabled && settings.rightClickProblem == nil)
             VStack(alignment: .leading, spacing: 6) {
-                Text("Tus pines en el clic derecho (opcional)")
+                Text(L("Your pins on right-click (optional)"))
                     .font(.headline)
-                Text("Con la tecla pulsada, el clic derecho muestra Pinny (Pines › carpetas › textos, y Recientes) en cualquier app. Sin la tecla, todo sigue como siempre.")
+                Text(L("Hold the key and right-click to open Pinny (Pins › folders › texts, and Recent) in any app. Without the key, nothing changes."))
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 HStack {
-                    Toggle("Activar", isOn: $settings.rightClickMenuEnabled)
-                    Picker("con", selection: $settings.rightClickModifier) {
+                    Toggle(L("Turn on"), isOn: $settings.rightClickMenuEnabled)
+                    Picker(L("with"), selection: $settings.rightClickModifier) {
                         ForEach(Settings.rightClickModifiers, id: \.id) { modifier in
                             Text(modifier.name).tag(modifier.id)
                         }
                     }
                     .fixedSize()
                     .disabled(!settings.rightClickMenuEnabled)
-                    Text("+ clic derecho")
+                    Text(L("+ right-click"))
                         .font(.callout)
                 }
                 if settings.rightClickMenuEnabled, let problem = settings.rightClickProblem {
@@ -249,26 +244,26 @@ private struct WelcomeView: View {
         HStack(alignment: .top, spacing: 12) {
             badge(number: 3, done: testPassed)
             VStack(alignment: .leading, spacing: 8) {
-                Text("Pruébalo")
+                Text(L("Try it"))
                     .font(.headline)
-                Text("1. Copia la frase.  2. Haz clic en el cuadro.  3. Pégala con \(howToPaste) → Recientes.")
+                Text(L("1. Copy the sentence.  2. Click the box.  3. Paste it with %@ → Recent.", howToPaste))
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
 
                 HStack {
-                    Text("«\(testPhrase)»")
+                    Text(L("“%@”", testPhrase))
                         .font(.callout.italic())
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
-                    Button("Copiar frase") {
+                    Button(L("Copy sentence")) {
                         let pasteboard = NSPasteboard.general
                         pasteboard.clearContents()
                         pasteboard.setString(testPhrase, forType: .string)
                     }
                 }
 
-                TextField("Pega aquí la frase…", text: $testText)
+                TextField(L("Paste the sentence here…"), text: $testText)
                     .textFieldStyle(.roundedBorder)
                     .disabled(testPassed)
                     .onChange(of: testText) { _, newValue in
@@ -278,11 +273,11 @@ private struct WelcomeView: View {
                     }
 
                 if testPassed {
-                    Text("¡Funciona! Pinny ya está listo 🎉")
+                    Text(L("It works! Pinny is ready 🎉"))
                         .font(.callout.bold())
                         .foregroundStyle(.green)
                 } else {
-                    Button(showHelp ? "Ocultar ayuda" : "No me aparece") {
+                    Button(showHelp ? L("Hide help") : L("It doesn’t show up")) {
                         withAnimation { showHelp.toggle() }
                     }
                     .buttonStyle(.link)
@@ -290,14 +285,14 @@ private struct WelcomeView: View {
 
                     if showHelp {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("• Comprueba que el paso 1 está en verde. Si el interruptor está activado en Ajustes del Sistema pero aquí no, pulsa «Reparar permiso».")
-                            Text("• Si usas una tecla + clic derecho, prueba con otra tecla en el paso 2 o pega con \(settings.menuHotKey.name).")
-                            Text("• Si aun así no va, pega con ⌘V: la frase ya está en tu portapapeles.")
+                            Text(L("• Check that step 1 is green. If the switch is on in System Settings but not here, click “Repair permission”."))
+                            Text(L("• If you use modifier + right-click, try another key in step 2 or paste with %@.", settings.menuHotKey.name))
+                            Text(L("• Still nothing? Paste with ⌘V: the sentence is already on your clipboard."))
                         }
                         .font(.caption)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
-                        Button("Reparar permiso", action: WelcomeWindow.repairAccessibility)
+                        Button(L("Repair permission"), action: WelcomeWindow.repairAccessibility)
                             .font(.caption)
                     }
                 }
@@ -307,7 +302,7 @@ private struct WelcomeView: View {
 
     private var howToPaste: String {
         settings.rightClickMenuEnabled
-            ? "\(settings.rightClickModifierSymbol) + clic derecho"
+            ? L("%@ + right-click", settings.rightClickModifierSymbol)
             : settings.menuHotKey.name
     }
 
@@ -347,7 +342,7 @@ private struct WelcomeView: View {
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 if done == true {
-                    Text("Activado")
+                    Text(L("On"))
                         .font(.callout.bold())
                         .foregroundStyle(.green)
                 } else {

@@ -18,7 +18,7 @@ struct HotKeyPreset: Identifiable, Hashable {
         HotKeyPreset(id: "ctrl-opt-shift-v", name: "⌃⌥⇧V", keyCode: kVK_ANSI_V, modifiers: controlKey | optionKey | shiftKey),
         HotKeyPreset(id: "ctrl-opt-c", name: "⌃⌥C", keyCode: kVK_ANSI_C, modifiers: controlKey | optionKey),
         HotKeyPreset(id: "ctrl-cmd-v", name: "⌃⌘V", keyCode: kVK_ANSI_V, modifiers: controlKey | cmdKey),
-        HotKeyPreset(id: "ctrl-opt-space", name: "⌃⌥Espacio", keyCode: kVK_Space, modifiers: controlKey | optionKey)
+        HotKeyPreset(id: "ctrl-opt-space", name: "⌃⌥" + L("Space"), keyCode: kVK_Space, modifiers: controlKey | optionKey)
     ]
 }
 
@@ -68,9 +68,9 @@ final class Settings: ObservableObject {
     @Published var rightClickProblem: String?
 
     static let rightClickModifiers: [(id: String, name: String)] = [
-        ("cmd", "⌘ Comando"),
-        ("opt", "⌥ Opción"),
-        ("shift", "⇧ Mayúsculas")
+        ("cmd", L("⌘ Command")),
+        ("opt", L("⌥ Option")),
+        ("shift", L("⇧ Shift"))
     ]
 
     var rightClickFlags: CGEventFlags {

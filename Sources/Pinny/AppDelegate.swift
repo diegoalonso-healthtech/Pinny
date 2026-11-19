@@ -37,7 +37,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         // Si hubo que recuperar datos al arrancar, se avisa.
         if let message = ClipStore.shared.recoveryMessage {
             Task { @MainActor in
-                Prompt.info(title: "Pinny ha recuperado tus datos", message: message)
+                Prompt.info(title: L("Pinny recovered your data"), message: message)
             }
         }
 
@@ -61,14 +61,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             Task { @MainActor in PopupMenu.show() }
         }
         if !menuOK {
-            problems.append("No se pudo activar \(menuKey.name) (menú rápido). Puede que otra app lo esté usando.")
+            problems.append(L("Couldn’t turn on %@ (quick menu). Another app may be using it.", menuKey.name))
         }
 
         let panelOK = hotKeys.register(id: 2, keyCode: panelKey.keyCode, modifiers: panelKey.modifiers) {
             Task { @MainActor in Paster.pickAndPaste(mode: .all) }
         }
         if !panelOK {
-            problems.append("No se pudo activar \(panelKey.name) (panel con buscador). Puede que otra app lo esté usando.")
+            problems.append(L("Couldn’t turn on %@ (search panel). Another app may be using it.", panelKey.name))
         }
 
         settings.hotKeyProblems = problems
@@ -78,7 +78,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let paused = Settings.shared.capturePaused
         statusItem.button?.image = NSImage(
             systemSymbolName: paused ? "pin.slash" : "pin.circle",
-            accessibilityDescription: paused ? "Pinny (captura en pausa)" : "Pinny"
+            accessibilityDescription: paused ? L("Pinny (capture paused)") : "Pinny"
         )
     }
 
@@ -89,7 +89,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let appItem = NSMenuItem()
         let appMenu = NSMenu()
         appMenu.addItem(NSMenuItem(
-            title: "Salir de Pinny",
+            title: L("Quit Pinny"),
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"
         ))
@@ -97,16 +97,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         main.addItem(appItem)
 
         let editItem = NSMenuItem()
-        let edit = NSMenu(title: "Edición")
-        edit.addItem(NSMenuItem(title: "Deshacer", action: Selector(("undo:")), keyEquivalent: "z"))
-        let redo = NSMenuItem(title: "Rehacer", action: Selector(("redo:")), keyEquivalent: "z")
+        let edit = NSMenu(title: L("Edit"))
+        edit.addItem(NSMenuItem(title: L("Undo"), action: Selector(("undo:")), keyEquivalent: "z"))
+        let redo = NSMenuItem(title: L("Redo"), action: Selector(("redo:")), keyEquivalent: "z")
         redo.keyEquivalentModifierMask = [.command, .shift]
         edit.addItem(redo)
         edit.addItem(.separator())
-        edit.addItem(NSMenuItem(title: "Cortar", action: #selector(NSText.cut(_:)), keyEquivalent: "x"))
-        edit.addItem(NSMenuItem(title: "Copiar", action: #selector(NSText.copy(_:)), keyEquivalent: "c"))
-        edit.addItem(NSMenuItem(title: "Pegar", action: #selector(NSText.paste(_:)), keyEquivalent: "v"))
-        edit.addItem(NSMenuItem(title: "Seleccionar todo", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"))
+        edit.addItem(NSMenuItem(title: L("Cut"), action: #selector(NSText.cut(_:)), keyEquivalent: "x"))
+        edit.addItem(NSMenuItem(title: L("Copy"), action: #selector(NSText.copy(_:)), keyEquivalent: "c"))
+        edit.addItem(NSMenuItem(title: L("Paste"), action: #selector(NSText.paste(_:)), keyEquivalent: "v"))
+        edit.addItem(NSMenuItem(title: L("Select All"), action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"))
         editItem.submenu = edit
         main.addItem(editItem)
 
@@ -141,36 +141,36 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         menu.addItem(.separator())
 
         let panelName = settings.panelHotKey.name
-        menu.addItem(ActionMenuItem(title: "Buscar en todo… (\(panelName))") {
+        menu.addItem(ActionMenuItem(title: L("Search everything… (%@)", panelName)) {
             Task { @MainActor in Paster.pickAndPaste(mode: .all) }
         })
-        menu.addItem(ActionMenuItem(title: "Ajustes…") {
+        menu.addItem(ActionMenuItem(title: L("Settings…")) {
             Task { @MainActor in SettingsWindow.show() }
         })
-        menu.addItem(ActionMenuItem(title: "Guía de configuración…") {
+        menu.addItem(ActionMenuItem(title: L("Setup guide…")) {
             Task { @MainActor in WelcomeWindow.show() }
         })
 
         menu.addItem(.separator())
 
         menu.addItem(ActionMenuItem(
-            title: settings.capturePaused ? "Reanudar captura" : "Pausar captura"
+            title: settings.capturePaused ? L("Resume capture") : L("Pause capture")
         ) { [weak self] in
             Task { @MainActor in
                 Settings.shared.capturePaused.toggle()
                 self?.updateStatusIcon()
             }
         })
-        menu.addItem(ActionMenuItem(title: "Borrar recientes (conserva pines)") {
+        menu.addItem(ActionMenuItem(title: L("Clear recent (keeps pins)")) {
             Task { @MainActor in ClipStore.shared.clearUnpinned() }
         })
 
         menu.addItem(.separator())
-        menu.addItem(ActionMenuItem(title: "Desinstalar Pinny…") {
+        menu.addItem(ActionMenuItem(title: L("Uninstall Pinny…")) {
             Task { @MainActor in Uninstaller.run() }
         })
         menu.addItem(NSMenuItem(
-            title: "Salir de Pinny",
+            title: L("Quit Pinny"),
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"
         ))

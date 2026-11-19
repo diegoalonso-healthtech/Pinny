@@ -61,7 +61,7 @@ final class RightClickMonitor {
             retryTimer?.invalidate()
             retryTimer = nil
         } else {
-            settings.rightClickProblem = "Pendiente de permiso: concede Accesibilidad a Pinny (y Monitorización de entrada si macOS lo pide). Se activará solo."
+            settings.rightClickProblem = L("Waiting for permission: allow Pinny in Accessibility (and Input Monitoring if macOS asks). It will turn on by itself.")
             scheduleRetry()
         }
     }

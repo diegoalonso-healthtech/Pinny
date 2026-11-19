@@ -13,7 +13,7 @@
 
 Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't run on Windows, Linux, iPhone or iPad). It keeps your copy history, lets you **pin** what matters, organize pins in **folders**, and paste them anywhere from a quick menu, a search panel or a right-click.
 
-> Version **1.0.0**. Text only. The app interface is in Spanish for now; English is coming in a future version, together with encrypted sync.
+> Version **1.1.0**. Available in **English and Spanish** (it follows your Mac’s language). Text only for now; encrypted sync is coming in a future version.
 
 <p align="center"><img src="docs/images/quick-menu.png" alt="Pinny quick menu: Pins › Work folder › saved text, opened with Control-Option-V in a mail window" width="760"></p>
 
@@ -37,7 +37,7 @@ Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't ru
 - **Modifier + right-click (optional):** hold ⌘ (configurable) and right-click to open Pinny's menu anywhere, even in apps that don't support macOS Services. Without the key, right-click works as usual.
 <p align="center"><img src="docs/images/right-click.png" alt="Holding Command and right-clicking in Notes opens Pinny's menu with recent items" width="680"></p>
 
-- **macOS Services:** *Pinny: Pines*, *Pinny: Recientes*, *Pinny: Buscar en todo* in right-click → Services.
+- **macOS Services:** *Pinny: Pins*, *Pinny: Recent*, *Pinny: Search everything* in right-click → Services.
 - **Keeps your clipboard:** after pasting a pin, whatever you had copied is restored.
 - **Privacy first:** everything stays on your Mac (`~/Library/Application Support/Pinny`, owner-only permissions). No network. Skips content that password managers mark as concealed, ignores apps you choose, and limits item size.
 - **Safe storage:** automatic backup on every launch; a damaged data file is set aside, never overwritten.
@@ -88,16 +88,16 @@ A setup guide walks you through three steps:
 2. **Right-click menu (optional):** turn on modifier + right-click and choose the key.
 3. **Try it:** copy a test sentence and paste it in a box. The step turns green when it arrives.
 
-You can reopen the guide from the menu bar icon → *Guía de configuración…*.
+You can reopen the guide from the menu bar icon → *Setup guide…*.
 
-**Permission is on but nothing happens?** Use **Reparar permiso** (repair permission) in the guide or in Settings. It resets the stored permission and asks again.
+**Permission is on but nothing happens?** Use **Repair permission** in the guide or in Settings. It resets the stored permission and asks again.
 
 ## Uninstall
 
-- From the app: menu bar icon → **Desinstalar Pinny…** You can choose to keep or delete your history, pins and settings.
+- From the app: menu bar icon → **Uninstall Pinny…** You can choose to keep or delete your history, pins and settings.
 - From Terminal: `./scripts/uninstall.sh` (keeps your data) or `./scripts/uninstall.sh --purge` (deletes everything).
 
-<sub>Images are illustrations of the app; the interface is currently in Spanish.</sub>
+<sub>Images are illustrations of the app, shown with the Spanish interface.</sub>
 
 ## Known limitations
 

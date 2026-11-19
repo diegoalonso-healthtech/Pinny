@@ -19,6 +19,9 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/Pinny"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 
+# Traducciones (inglés por defecto, español si el Mac está en español)
+cp -R Resources/Localization/*.lproj "$APP/Contents/Resources/"
+
 # Icono: en macOS se genera con iconutil desde el iconset (todos los tamaños);
 # si no está disponible, se usa el .icns incluido en el repositorio.
 if command -v iconutil >/dev/null 2>&1 && [ -d assets/AppIcon.iconset ]; then
