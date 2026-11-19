@@ -4,7 +4,6 @@ import AppKit
 struct PinnyApp {
     @MainActor
     static func main() {
-        Migration.runIfNeeded() // datos de ClipPin, nombre anterior
         let app = NSApplication.shared
         let delegate = AppDelegate()
         app.delegate = delegate

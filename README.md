@@ -1,43 +1,58 @@
-<p align="center"><img src="assets/logo.png" alt="Pinny" width="560"></p>
+<p align="center"><img src="assets/logo-en.png" alt="Pinny" width="560"></p>
 
-# Pinny
+<p align="center"><b>A clipboard manager for macOS</b><br>
+ Apple silicon · macOS 14 or later · Free and open source</p>
 
-**Lo que copias, a mano. Lo que importa, clavado.**
+<p align="center"><a href="../../releases/latest"><b>⬇ Download the latest Pinny .dmg</b></a> — ready to use, no build needed</p>
 
-Gestor de portapapeles de código abierto para macOS con **historial, pines, carpetas de pines, menú rápido con submenús y Servicios**.
+<p align="center"><b>English</b> · <a href="README.es.md">Español</a></p>
 
-> Estado: **v0.3.11 (antes ClipPin), en pruebas.** Solo texto. Sincronización en la nube, traducción al inglés y CI, previstos para v0.4.
+# Pinny for macOS
 
-## Qué hace
+**Your clipboard, pinned.**
 
-- Guarda el historial de texto copiado (por defecto los 20 últimos elementos no anclados; ampliable en Ajustes hasta 2000).
-- **Pines** que no se borran nunca solos, ordenables, agrupables en **carpetas** (un nivel).
-- **Menú rápido (⌃⌥V por defecto)**: un menú nativo en la posición del cursor, en cualquier app:
+Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't run on Windows, Linux, iPhone or iPad). It keeps your copy history, lets you **pin** what matters, organize pins in **folders**, and paste them anywhere from a quick menu, a search panel or a right-click.
+
+> Version **1.0.0**. Text only. The app interface is in Spanish for now; English is coming in a future version, together with encrypted sync.
+
+## Features
+
+- **History** of everything you copy (last 20 items by default, up to 2,000).
+- **Pins** that never expire, can be reordered and grouped in **folders**.
+- **Quick menu (⌃⌥V)** right at your cursor, in any app:
 
   ```
-  Pines      >  📁 Carpeta 1  >  texto
-                               >  texto
-                 texto suelto
-  Recientes  >  últimos 10
+  Pins    ›  📁 Folder 1  ›  text
+                          ›  text
+             loose pin
+  Recent  ›  last 10
   ```
-  Al elegir un elemento se pega en la app activa.
-- **Panel con buscador (⌃⌥⇧V por defecto)**: ↑ ↓ para moverte, Intro para elegir, ⌘1…⌘9 para elegir directamente, Esc para cerrar. Desde aquí anclas, mueves pines, creas y gestionas carpetas.
-- **Tecla + clic derecho (experimental, opcional):** con ⌘ (configurable) pulsada, el clic derecho muestra el menú de Pinny con Pines › carpetas › textos y Recientes en cualquier app. Se activa desde la guía de bienvenida o en Ajustes. Sin la tecla, el clic derecho funciona como siempre.
-- **Servicios** (clic derecho → Servicios): *Pinny: Pines*, *Pinny: Recientes*, *Pinny: Buscar en todo*.
-- Icono en la barra de menús con los mismos Pines y Recientes (elegir = copiar).
-- **Privacidad:** ignora lo que los gestores de contraseñas marcan como oculto, una lista de apps ignoradas (editable) y un tamaño máximo por elemento.
-- Ajustes: límite de historial, atajos, apps ignoradas, abrir al iniciar sesión.
-- Al pegar con los atajos o el menú rápido, se restaura después lo que tenías copiado.
-- Todo es local: `~/Library/Application Support/Pinny/store.json` (carpeta 700, archivo 600). Sin red.
-- **Copia de seguridad:** en cada arranque se guarda `store.backup.json`. Si `store.json` se daña, Pinny lo aparta como `store.corrupt-<fecha>.json`, recupera la copia y te avisa.
+  Pick an item and Pinny pastes it into the active app.
+- **Search panel (⌃⌥⇧V):** ↑ ↓ to move, Return to paste, ⌘1…⌘9 for the first nine, Esc to close. Manage pins and folders from here.
+- **Modifier + right-click (optional):** hold ⌘ (configurable) and right-click to open Pinny's menu anywhere, even in apps that don't support macOS Services. Without the key, right-click works as usual.
+- **macOS Services:** *Pinny: Pines*, *Pinny: Recientes*, *Pinny: Buscar en todo* in right-click → Services.
+- **Keeps your clipboard:** after pasting a pin, whatever you had copied is restored.
+- **Privacy first:** everything stays on your Mac (`~/Library/Application Support/Pinny`, owner-only permissions). No network. Skips content that password managers mark as concealed, ignores apps you choose, and limits item size.
+- **Safe storage:** automatic backup on every launch; a damaged data file is set aside, never overwritten.
+- **Guided setup** with a live paste test, launch at login, and a built-in uninstaller.
 
-## ¿Venías de ClipPin?
+## Install
 
-Pinny es el nuevo nombre de ClipPin. La primera vez que abres Pinny copia tu historial, pines, carpetas y ajustes de ClipPin (sin borrar nada de ClipPin). Desinstala ClipPin antes, conservando los datos, para que no haya dos apps vigilando el portapapeles: icono de ClipPin → *Desinstalar ClipPin…* sin marcar la casilla de borrar datos. Como Pinny es una app nueva para macOS, tendrás que volver a dar el permiso de Accesibilidad.
+**macOS only.** Requires a Mac with Apple silicon (M1 or later) and macOS 14 Sonoma or later.
 
-## Compilar
+### Option 1: download the ready-made app (recommended)
 
-Requisitos: Apple silicon, macOS 14 o superior, Xcode o Command Line Tools (`xcode-select --install`).
+No Xcode, no Terminal, no building. Every release includes a pre-built installer:
+
+1. Go to [**Releases**](../../releases/latest) and download `Pinny-<version>.dmg`.
+2. Open it and drag **Pinny** to **Applications**.
+3. Open Pinny from Applications.
+
+Pinny is not notarized by Apple yet, so the first time macOS will block it. Go to System Settings → Privacy & Security and click **Open Anyway** (only once).
+
+### Option 2: build from source
+
+You need Xcode or the Command Line Tools (`xcode-select --install`).
 
 ```sh
 ./scripts/build-app.sh
@@ -45,68 +60,43 @@ cp -R build/Pinny.app /Applications/
 open /Applications/Pinny.app
 ```
 
-Como la firma por defecto es ad-hoc, la primera vez macOS puede pedir abrirla con clic derecho → Abrir.
-
-### Evitar que macOS pida de nuevo Accesibilidad tras cada compilación
-
-Con firma ad-hoc, cada recompilación cuenta como una app distinta. Crea un certificado autofirmado (Llavero → menú Llavero → Asistente de Certificados → Crear un certificado → Tipo: *Firma de código*) y compila con:
+To create the installer (`build/Pinny-<version>.dmg`):
 
 ```sh
-SIGN_IDENTITY="Nombre de tu certificado" ./scripts/build-app.sh
+brew install create-dmg   # once
+./scripts/make-dmg.sh
 ```
 
-## Crear el instalador (.dmg)
+Tip: with the default ad-hoc signature, macOS treats every rebuild as a new app and the Accessibility permission stops working. Sign with a self-signed code-signing certificate from Keychain Access to avoid it:
 
 ```sh
-brew install create-dmg      # una sola vez (código abierto)
-./scripts/build-app.sh
-./scripts/make-dmg.sh        # → build/Pinny-<versión>.dmg
+SIGN_IDENTITY="Your certificate name" ./scripts/build-app.sh
 ```
 
-El DMG muestra la ventana «Arrastra Pinny a Aplicaciones». Sin `create-dmg` se genera un DMG sencillo, sin fondo. Los diseños originales del icono y del fondo están en `assets/` (SVG).
+## First launch
 
-Como la app no está notarizada por Apple, al abrirla por primera vez tras descargarla macOS mostrará un aviso. Se permite una vez en Ajustes del Sistema → Privacidad y seguridad → «Abrir igualmente».
+A setup guide walks you through three steps:
 
-## Activar los Servicios
+1. **Permission:** Pinny needs Accessibility to paste into other apps (on macOS 27 it's called *Device Control and Data Access*). The button opens macOS's own prompt.
+2. **Right-click menu (optional):** turn on modifier + right-click and choose the key.
+3. **Try it:** copy a test sentence and paste it in a box. The step turns green when it arrives.
 
-Al abrir Pinny por primera vez aparece una **guía de configuración** en tres pasos: dar el permiso (con el aviso del propio macOS), activar opcionalmente tecla + clic derecho y una **prueba real**: copias una frase y la pegas en un cuadro; el paso se pone en verde solo cuando llega. La guía vuelve sola al frente cuando sales de Ajustes del Sistema. Puedes volver a abrirla desde el icono de la barra de menús → *Guía de configuración…*. A mano:
+You can reopen the guide from the menu bar icon → *Guía de configuración…*.
 
+**Permission is on but nothing happens?** Use **Reparar permiso** (repair permission) in the guide or in Settings. It resets the stored permission and asks again.
 
-1. Abre Pinny (aparece un pin en la barra de menús).
-2. Ajustes del Sistema → Teclado → Atajos de teclado → Servicios → Texto → marca los tres que empiezan por **Pinny:**.
-3. Si no aparecen, ejecuta y reabre la app:
+## Uninstall
 
-   ```sh
-   /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister -f /Applications/Pinny.app
-   /System/Library/CoreServices/pbs -update
-   ```
+- From the app: menu bar icon → **Desinstalar Pinny…** You can choose to keep or delete your history, pins and settings.
+- From Terminal: `./scripts/uninstall.sh` (keeps your data) or `./scripts/uninstall.sh --purge` (deletes everything).
 
-## Permiso de Accesibilidad
+## Known limitations
 
-Para pegar con los atajos y el menú rápido, Pinny necesita Ajustes del Sistema → Privacidad y seguridad → Accesibilidad (en macOS 27 este apartado ha cambiado de nombre: *Device Control and Data Access* en inglés). Sin él, el elemento elegido queda en el portapapeles y lo pegas tú con ⌘V.
+- Text only (no images or files yet).
+- macOS Services only show up in apps that support them; Electron apps usually don't. Use the quick menu or modifier + right-click there.
+- Services entries are fixed by macOS, so they can't list each pin. That's what the right-click menu is for.
+- *Launch at login* may not work with ad-hoc signing or outside `/Applications`.
 
-## Desinstalar
+## License
 
-Tres opciones:
-
-- Desde la app: icono de la barra de menús → **Desinstalar Pinny…** (o en Ajustes). Puedes marcar si quieres borrar también tu historial, pines y ajustes.
-- Desde Terminal, conservando tus datos: `./scripts/uninstall.sh`
-- Desde Terminal, borrándolo todo: `./scripts/uninstall.sh --purge` (añade `--yes` para no pedir confirmación).
-
-Cierra la app, la borra de `/Applications` (o `~/Applications`), quita su permiso de Accesibilidad y refresca los Servicios. Los datos están en `~/Library/Application Support/Pinny`.
-
-## Si el permiso está activado pero no funciona
-
-Con firma ad-hoc, cada recompilación cuenta como una app distinta: el interruptor sigue activado en Ajustes del Sistema, pero ya no vale. En la guía de bienvenida o en Ajustes pulsa **Reparar permiso** (borra el permiso guardado y lo vuelve a pedir), o firma con un certificado propio (ver *Compilar*).
-
-## Limitaciones conocidas
-
-- Los Servicios solo aparecen en apps que los soportan; las basadas en Electron (como Claude de escritorio) normalmente no los muestran. Para esas apps, usa el menú rápido o el panel.
-- macOS no admite submenús en Servicios y sus entradas son fijas: no pueden listar cada pin. Para eso está la opción de tecla + clic derecho.
-- La app en primer plano se usa como aproximación de «la app que ha copiado» para la lista de apps ignoradas.
-- «Abrir al iniciar sesión» puede no funcionar con firma ad-hoc o fuera de `/Applications`.
-- Solo texto plano.
-
-## Licencia
-
-MIT
+[MIT](LICENSE)
