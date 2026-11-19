@@ -15,6 +15,8 @@ Pinny es un gestor de portapapeles gratuito y de código abierto **solo para mac
 
 > Versión **1.0.0**. Solo texto. Sincronización cifrada e interfaz en inglés, previstas para próximas versiones.
 
+<p align="center"><img src="docs/images/quick-menu.png" alt="Menú rápido de Pinny: Pines › carpeta Trabajo › texto guardado, abierto con Control-Opción-V en una ventana de correo" width="760"></p>
+
 ## Qué hace
 
 - **Historial** de todo lo que copias (por defecto los 20 últimos, ampliable hasta 2000).
@@ -29,7 +31,12 @@ Pinny es un gestor de portapapeles gratuito y de código abierto **solo para mac
   ```
   Eliges un elemento y Pinny lo pega en la app activa.
 - **Buscador (⌃⌥⇧V):** ↑ ↓ para moverte, Intro para pegar, ⌘1…⌘9 para los nueve primeros, Esc para cerrar. Desde aquí gestionas pines y carpetas.
+
+<p align="center"><img src="docs/images/search-panel.png" alt="Buscador de Pinny filtrando pines y recientes, con atajos de teclado" width="680"></p>
+
 - **Tecla + clic derecho (opcional):** con ⌘ pulsada (configurable), el clic derecho abre el menú de Pinny en cualquier app, incluso en las que no admiten los Servicios de macOS. Sin la tecla, el clic derecho funciona como siempre.
+<p align="center"><img src="docs/images/right-click.png" alt="Con Comando pulsado, el clic derecho en Notas abre el menú de Pinny con los recientes" width="680"></p>
+
 - **Servicios de macOS:** *Pinny: Pines*, *Pinny: Recientes* y *Pinny: Buscar en todo*, en clic derecho → Servicios.
 - **Respeta tu portapapeles:** después de pegar un pin, se restaura lo que tenías copiado.
 - **Privacidad ante todo:** todo se queda en tu Mac (`~/Library/Application Support/Pinny`, con permisos solo para tu usuario). Sin red. Ignora lo que los gestores de contraseñas marcan como oculto, las apps que elijas y los elementos demasiado grandes.
@@ -89,6 +96,8 @@ Puedes volver a abrir la guía desde el icono de la barra de menús → *Guía d
 
 - Desde la app: icono de la barra de menús → **Desinstalar Pinny…** Puedes elegir si conservas o borras tu historial, pines y ajustes.
 - Desde Terminal: `./scripts/uninstall.sh` (conserva tus datos) o `./scripts/uninstall.sh --purge` (lo borra todo).
+
+<sub>Las imágenes son ilustraciones de la app.</sub>
 
 ## Limitaciones conocidas
 
