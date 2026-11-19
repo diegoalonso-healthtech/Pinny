@@ -13,7 +13,7 @@
 
 Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't run on Windows, Linux, iPhone or iPad). It keeps your copy history, lets you **pin** what matters, organize pins in **folders**, and paste them anywhere from a quick menu, a search panel or a right-click.
 
-> Status: **v0.3.11, beta.** Text only. The app interface is in Spanish for now; English is coming in v0.4, together with encrypted sync and automatic builds.
+> Version **1.0.0**. Text only. The app interface is in Spanish for now; English is coming in a future version, together with encrypted sync.
 
 ## Features
 
