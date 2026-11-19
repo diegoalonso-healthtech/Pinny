@@ -20,6 +20,7 @@ enum SettingsWindow {
             newWindow.center()
             window = newWindow
         }
+        window?.title = L("Pinny Settings")
         NSApp.activate(ignoringOtherApps: true)
         window?.makeKeyAndOrderFront(nil)
     }
@@ -32,6 +33,15 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
+            Section(L("Language")) {
+                Picker(L("Language"), selection: $settings.language) {
+                    Text(L("Automatic (Mac language)")).tag("auto")
+                    ForEach(Lang.available, id: \.code) { language in
+                        Text(language.name).tag(language.code)
+                    }
+                }
+            }
+
             Section(L("History")) {
                 Stepper(
                     L("Recent items to keep: %ld", settings.historyLimit),

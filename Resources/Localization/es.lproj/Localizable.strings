@@ -110,3 +110,6 @@
 "• Still nothing? Paste with ⌘V: the sentence is already on your clipboard." = "• Si aun así no va, pega con ⌘V: la frase ya está en tu portapapeles.";
 "%@ + right-click" = "%@ + clic derecho";
 "On" = "Activado";
+"Language" = "Idioma";
+"Automatic" = "Automático";
+"Automatic (Mac language)" = "Automático (idioma del Mac)";

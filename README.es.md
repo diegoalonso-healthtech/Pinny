@@ -13,7 +13,7 @@
 
 Pinny es un gestor de portapapeles gratuito y de código abierto **solo para macOS** (no funciona en Windows, Linux, iPhone ni iPad). Guarda tu historial de copias, te deja **anclar** lo importante, ordenar los pines en **carpetas** y pegarlos en cualquier app desde un menú rápido, un buscador o el clic derecho.
 
-> Versión **1.1.0**. En **español e inglés** (sigue el idioma de tu Mac). Por ahora solo texto; la sincronización cifrada llegará en una próxima versión.
+> Versión **1.1.0**. En **español, inglés, francés, alemán, italiano y portugués (Brasil)**. Sigue el idioma de tu Mac, o puedes elegirlo en la guía de bienvenida o en Ajustes. Por ahora solo texto; la sincronización cifrada llegará en una próxima versión.
 
 <p align="center"><img src="docs/images/quick-menu.png" alt="Menú rápido de Pinny: Pines › carpeta Trabajo › texto guardado, abierto con Control-Opción-V en una ventana de correo" width="760"></p>
 
@@ -91,6 +91,14 @@ Una guía te lleva por tres pasos:
 Puedes volver a abrir la guía desde el icono de la barra de menús → *Guía de configuración…*.
 
 **¿El permiso está activado pero no funciona?** Pulsa **Reparar permiso** en la guía o en Ajustes: borra el permiso guardado y lo vuelve a pedir.
+
+## Idiomas
+
+English · Español · Français · Deutsch · Italiano · Português (Brasil)
+
+Pinny usa el idioma de tu Mac por defecto. Para cambiarlo, usa el menú de idioma de la guía de bienvenida o **Ajustes → Idioma**; el cambio es inmediato. Los nombres de los Servicios de macOS siguen siempre el idioma del sistema.
+
+Las traducciones distintas del inglés y el español son una primera versión: se agradecen correcciones. En [CONTRIBUTING.md](CONTRIBUTING.md) se explica cómo corregir una traducción o añadir un idioma (un solo archivo, sin programar).
 
 ## Desinstalar
 

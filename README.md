@@ -13,7 +13,7 @@
 
 Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't run on Windows, Linux, iPhone or iPad). It keeps your copy history, lets you **pin** what matters, organize pins in **folders**, and paste them anywhere from a quick menu, a search panel or a right-click.
 
-> Version **1.1.0**. Available in **English and Spanish** (it follows your Mac’s language). Text only for now; encrypted sync is coming in a future version.
+> Version **1.1.0**. Available in **English, Spanish, French, German, Italian and Portuguese (Brazil)**. It follows your Mac’s language, or you can pick one in the setup guide or in Settings. Text only for now; encrypted sync is coming in a future version.
 
 <p align="center"><img src="docs/images/quick-menu.png" alt="Pinny quick menu: Pins › Work folder › saved text, opened with Control-Option-V in a mail window" width="760"></p>
 
@@ -91,6 +91,14 @@ A setup guide walks you through three steps:
 You can reopen the guide from the menu bar icon → *Setup guide…*.
 
 **Permission is on but nothing happens?** Use **Repair permission** in the guide or in Settings. It resets the stored permission and asks again.
+
+## Languages
+
+English · Español · Français · Deutsch · Italiano · Português (Brasil)
+
+Pinny uses your Mac’s language by default. To change it, use the language menu in the setup guide or **Settings → Language**; the change is instant. The names of the macOS Services always follow the system language.
+
+Translations other than English and Spanish are a first version: corrections are very welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to fix a translation or add a new language (one file, no coding needed).
 
 ## Uninstall
 

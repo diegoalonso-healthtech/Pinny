@@ -41,8 +41,14 @@ enum WelcomeWindow {
             newWindow.center()
             window = newWindow
         }
+        refreshTitle()
         NSApp.activate(ignoringOtherApps: true)
         window?.makeKeyAndOrderFront(nil)
+    }
+
+    /// Título en el idioma actual (al abrir y al cambiar de idioma).
+    static func refreshTitle() {
+        window?.title = L("Set up Pinny")
     }
 
     // MARK: - Abrir Ajustes del Sistema
@@ -151,7 +157,7 @@ private struct WelcomeView: View {
     @State private var showHelp = false
 
     /// Frase de prueba, en el idioma del sistema.
-    private let testPhrase = L("No pins were harmed in the making of this text 📌")
+    private var testPhrase: String { L("No pins were harmed in the making of this text 📌") }
     private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     var body: some View {
@@ -165,6 +171,19 @@ private struct WelcomeView: View {
                         .font(.title2.bold())
                     Text(L("Three steps and you’re pasting."))
                         .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Picker(L("Language"), selection: $settings.language) {
+                    Text(L("Automatic")).tag("auto")
+                    ForEach(Lang.available, id: \.code) { language in
+                        Text(language.name).tag(language.code)
+                    }
+                }
+                .labelsHidden()
+                .fixedSize()
+                .help(L("Language"))
+                .onChange(of: settings.language) { _, _ in
+                    WelcomeWindow.refreshTitle()
                 }
             }
 

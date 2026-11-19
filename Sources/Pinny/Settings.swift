@@ -47,6 +47,14 @@ final class Settings: ObservableObject {
     @Published var capturePaused: Bool {
         didSet { UserDefaults.standard.set(capturePaused, forKey: "capturePaused") }
     }
+    /// Idioma de la interfaz: "auto" (el del Mac) o un código de Lang.available.
+    @Published var language: String {
+        didSet {
+            UserDefaults.standard.set(language, forKey: "language")
+            Lang.apply(language)
+        }
+    }
+
     /// Avisos de atajos que macOS no ha aceptado (no se guardan).
     @Published var hotKeyProblems: [String] = []
 
@@ -114,6 +122,7 @@ final class Settings: ObservableObject {
         capturePaused = d.bool(forKey: "capturePaused")
         rightClickMenuEnabled = d.bool(forKey: "rightClickMenuEnabled")
         rightClickModifier = d.string(forKey: "rightClickModifier") ?? "cmd"
+        language = d.string(forKey: "language") ?? "auto"
         ignoredApps = d.string(forKey: "ignoredApps") ?? Settings.defaultIgnoredApps
         menuHotKeyID = d.string(forKey: "menuHotKeyID") ?? "ctrl-opt-v"
         panelHotKeyID = d.string(forKey: "panelHotKeyID") ?? "ctrl-opt-shift-v"
