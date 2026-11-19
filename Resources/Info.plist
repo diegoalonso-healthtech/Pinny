@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleName</key>
+    <string>Pinny</string>
+    <key>CFBundleDisplayName</key>
+    <string>Pinny</string>
+    <key>CFBundleExecutable</key>
+    <string>Pinny</string>
+    <key>CFBundleIdentifier</key>
+    <string>app.pinny.Pinny</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.3.11</string>
+    <key>CFBundleVersion</key>
+    <string>15</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>14.0</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+    <key>NSServices</key>
+    <array>
+        <dict>
+            <key>NSMenuItem</key>
+            <dict>
+                <key>default</key>
+                <string>Pinny: Pines</string>
+            </dict>
+            <key>NSMessage</key>
+            <string>pickPinned</string>
+            <key>NSRequiredContext</key>
+            <dict/>
+            <key>NSTimeout</key>
+            <string>600000</string>
+            <key>NSPortName</key>
+            <string>Pinny</string>
+            <key>NSReturnTypes</key>
+            <array>
+                <string>NSStringPboardType</string>
+            </array>
+        </dict>
+        <dict>
+            <key>NSMenuItem</key>
+            <dict>
+                <key>default</key>
+                <string>Pinny: Recientes</string>
+            </dict>
+            <key>NSMessage</key>
+            <string>pickRecent</string>
+            <key>NSRequiredContext</key>
+            <dict/>
+            <key>NSTimeout</key>
+            <string>600000</string>
+            <key>NSPortName</key>
+            <string>Pinny</string>
+            <key>NSReturnTypes</key>
+            <array>
+                <string>NSStringPboardType</string>
+            </array>
+        </dict>
+        <dict>
+            <key>NSMenuItem</key>
+            <dict>
+                <key>default</key>
+                <string>Pinny: Buscar en todo</string>
+            </dict>
+            <key>NSMessage</key>
+            <string>pickAll</string>
+            <key>NSRequiredContext</key>
+            <dict/>
+            <key>NSTimeout</key>
+            <string>600000</string>
+            <key>NSPortName</key>
+            <string>Pinny</string>
+            <key>NSReturnTypes</key>
+            <array>
+                <string>NSStringPboardType</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>
