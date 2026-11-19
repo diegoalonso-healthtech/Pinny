@@ -13,14 +13,18 @@
 
 Pinny es un gestor de portapapeles gratuito y de código abierto **solo para macOS** (no funciona en Windows, Linux, iPhone ni iPad). Guarda tu historial de copias, te deja **anclar** lo importante, ordenar los pines en **carpetas** y pegarlos en cualquier app desde un menú rápido, un buscador o el clic derecho.
 
-> Versión **1.0.0**. Solo texto. Sincronización cifrada e interfaz en inglés, previstas para próximas versiones.
+> Versión **1.1.0**. En **español, inglés, francés, alemán, italiano y portugués (Brasil)**. Sigue el idioma de tu Mac, o puedes elegirlo en la guía de bienvenida o en Ajustes. Por ahora solo texto; la sincronización cifrada llegará en una próxima versión.
 
 <p align="center"><img src="docs/images/quick-menu.png" alt="Menú rápido de Pinny: Pines › carpeta Trabajo › texto guardado, abierto con Control-Opción-V en una ventana de correo" width="760"></p>
 
 ## Qué hace
 
 - **Historial** de todo lo que copias (por defecto los 20 últimos, ampliable hasta 2000).
-- **Pines** que no caducan nunca, ordenables y agrupables en **carpetas**.
+- **Pines** que no caducan nunca, ordenables y agrupables en **carpetas**. Puedes guardar uno de varias formas:
+  - **Anclar selección:** selecciona un texto en cualquier app y haz clic derecho → Servicios → *Pinny: Anclar selección*, o usa el menú de Pinny (menú rápido o tecla + clic derecho).
+  - **Anclar portapapeles (⌃⌥P):** copia con ⌘C y pulsa ⌃⌥P.
+  - **Anclar lo último copiado** desde el menú rápido o el icono de la barra de menús.
+  - **Nuevo pin…** al final del menú Pines: escribe o pega cualquier texto y elige carpeta.
 - **Menú rápido (⌃⌥V)** en la posición del cursor, en cualquier app:
 
   ```
@@ -37,7 +41,7 @@ Pinny es un gestor de portapapeles gratuito y de código abierto **solo para mac
 - **Tecla + clic derecho (opcional):** con ⌘ pulsada (configurable), el clic derecho abre el menú de Pinny en cualquier app, incluso en las que no admiten los Servicios de macOS. Sin la tecla, el clic derecho funciona como siempre.
 <p align="center"><img src="docs/images/right-click.png" alt="Con Comando pulsado, el clic derecho en Notas abre el menú de Pinny con los recientes" width="680"></p>
 
-- **Servicios de macOS:** *Pinny: Pines*, *Pinny: Recientes* y *Pinny: Buscar en todo*, en clic derecho → Servicios.
+- **Servicios de macOS:** *Pinny: Pines*, *Pinny: Recientes*, *Pinny: Buscar en todo* y *Pinny: Anclar selección*, en clic derecho → Servicios.
 - **Respeta tu portapapeles:** después de pegar un pin, se restaura lo que tenías copiado.
 - **Privacidad ante todo:** todo se queda en tu Mac (`~/Library/Application Support/Pinny`, con permisos solo para tu usuario). Sin red. Ignora lo que los gestores de contraseñas marcan como oculto, las apps que elijas y los elementos demasiado grandes.
 - **Datos a salvo:** copia de seguridad automática en cada arranque; si el archivo de datos se daña, se aparta y nunca se sobrescribe.
@@ -57,6 +61,22 @@ Sin Xcode, sin Terminal y sin compilar. Cada versión incluye el instalador list
 
 Pinny todavía no está notarizada por Apple, así que la primera vez macOS la bloqueará. Ve a Ajustes del Sistema → Privacidad y seguridad y pulsa **Abrir igualmente** (solo una vez).
 
+#### Comprobar la descarga (opcional)
+
+Cada versión la compila GitHub Actions directamente desde este repositorio e incluye dos formas de comprobar que el DMG no se ha manipulado:
+
+- **Procedencia de la compilación:** una attestation firmada (Sigstore) que demuestra que el DMG se compiló desde este repositorio. Con [GitHub CLI](https://cli.github.com):
+
+  ```sh
+  gh attestation verify Pinny-<versión>.dmg --repo diegoalonso-healthtech/Pinny
+  ```
+
+- **Huella SHA-256:** compárala con el archivo `.sha256` adjunto a la versión:
+
+  ```sh
+  shasum -a 256 Pinny-<versión>.dmg
+  ```
+
 ### Opción 2: compilar desde el código
 
 Necesitas Xcode o las Command Line Tools (`xcode-select --install`).
@@ -74,11 +94,7 @@ brew install create-dmg   # una sola vez
 ./scripts/make-dmg.sh
 ```
 
-Consejo: con la firma ad-hoc por defecto, macOS trata cada recompilación como una app nueva y el permiso de Accesibilidad deja de funcionar. Para evitarlo, firma con un certificado de firma de código autofirmado creado en Acceso a Llaveros:
-
-```sh
-SIGN_IDENTITY="Nombre de tu certificado" ./scripts/build-app.sh
-```
+Con la firma ad-hoc por defecto, macOS ata el permiso a esa compilación exacta, así que tras cada recompilación hay que volver a darlo (con **Reparar permiso**). Puedes firmar con un certificado propio (`SIGN_IDENTITY="Nombre del certificado" ./scripts/build-app.sh`), pero entonces cualquiera que tenga su clave privada podría firmar una app que herede el permiso de Pinny, así que guárdala bien.
 
 ## Primer arranque
 
@@ -91,6 +107,16 @@ Una guía te lleva por tres pasos:
 Puedes volver a abrir la guía desde el icono de la barra de menús → *Guía de configuración…*.
 
 **¿El permiso está activado pero no funciona?** Pulsa **Reparar permiso** en la guía o en Ajustes: borra el permiso guardado y lo vuelve a pedir.
+
+**Tras actualizar Pinny** macOS vuelve a pedir el permiso. Es lo esperado: las versiones usan firma ad-hoc, así que macOS ata el permiso a cada compilación exacta y una copia nueva o modificada nunca lo hereda. Pinny lo detecta, abre la guía y solo tienes que pulsar **Reparar permiso**.
+
+## Idiomas
+
+English · Español · Français · Deutsch · Italiano · Português (Brasil)
+
+Pinny usa el idioma de tu Mac por defecto. Para cambiarlo, usa el menú de idioma de la guía de bienvenida o **Ajustes → Idioma**; el cambio es inmediato. Los nombres de los Servicios de macOS siguen siempre el idioma del sistema.
+
+Las traducciones distintas del inglés y el español son una primera versión: se agradecen correcciones. En [CONTRIBUTING.md](CONTRIBUTING.md) se explica cómo corregir una traducción o añadir un idioma (un solo archivo, sin programar).
 
 ## Desinstalar
 

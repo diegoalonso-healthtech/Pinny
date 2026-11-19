@@ -8,8 +8,8 @@ enum Prompt {
         let alert = NSAlert()
         alert.messageText = title
         alert.informativeText = message
-        alert.addButton(withTitle: "Aceptar")
-        alert.addButton(withTitle: "Cancelar")
+        alert.addButton(withTitle: L("OK"))
+        alert.addButton(withTitle: L("Cancel"))
 
         let field = NSTextField(frame: NSRect(x: 0, y: 0, width: 240, height: 24))
         field.stringValue = initial
@@ -28,7 +28,7 @@ enum Prompt {
         alert.informativeText = message
         alert.alertStyle = .warning
         alert.addButton(withTitle: action)
-        alert.addButton(withTitle: "Cancelar")
+        alert.addButton(withTitle: L("Cancel"))
         return alert.runModal() == .alertFirstButtonReturn
     }
 
@@ -37,7 +37,7 @@ enum Prompt {
         let alert = NSAlert()
         alert.messageText = title
         alert.informativeText = message
-        alert.addButton(withTitle: "Aceptar")
+        alert.addButton(withTitle: L("OK"))
         NSApp.activate(ignoringOtherApps: true)
         alert.runModal()
     }

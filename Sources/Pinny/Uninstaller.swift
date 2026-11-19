@@ -12,25 +12,25 @@ enum Uninstaller {
         // Salvaguarda: solo se borra si se ejecuta desde un paquete Pinny.app.
         guard bundlePath.hasSuffix("/Pinny.app") else {
             let alert = NSAlert()
-            alert.messageText = "No se puede desinstalar desde aquí"
-            alert.informativeText = "Pinny no se está ejecutando desde un paquete Pinny.app. Usa scripts/uninstall.sh."
+            alert.messageText = L("Can’t uninstall from here")
+            alert.informativeText = L("Pinny isn’t running from a Pinny.app bundle. Use scripts/uninstall.sh.")
             alert.runModal()
             return
         }
 
         let alert = NSAlert()
-        alert.messageText = "¿Desinstalar Pinny?"
-        alert.informativeText = "Se cerrará la app y se eliminará de este Mac."
+        alert.messageText = L("Uninstall Pinny?")
+        alert.informativeText = L("The app will quit and be removed from this Mac.")
         alert.alertStyle = .warning
         let purgeCheckbox = NSButton(
-            checkboxWithTitle: "Borrar también mi historial, pines y ajustes",
+            checkboxWithTitle: L("Also delete my history, pins and settings"),
             target: nil,
             action: nil
         )
         purgeCheckbox.state = .off
         alert.accessoryView = purgeCheckbox
-        alert.addButton(withTitle: "Desinstalar")
-        alert.addButton(withTitle: "Cancelar")
+        alert.addButton(withTitle: L("Uninstall"))
+        alert.addButton(withTitle: L("Cancel"))
 
         NSApp.activate(ignoringOtherApps: true)
         guard alert.runModal() == .alertFirstButtonReturn else { return }

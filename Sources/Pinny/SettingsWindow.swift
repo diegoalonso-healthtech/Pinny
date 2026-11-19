@@ -14,12 +14,13 @@ enum SettingsWindow {
                 backing: .buffered,
                 defer: false
             )
-            newWindow.title = "Ajustes de Pinny"
+            newWindow.title = L("Pinny Settings")
             newWindow.isReleasedWhenClosed = false
             newWindow.contentView = NSHostingView(rootView: SettingsView())
             newWindow.center()
             window = newWindow
         }
+        window?.title = L("Pinny Settings")
         NSApp.activate(ignoringOtherApps: true)
         window?.makeKeyAndOrderFront(nil)
     }
@@ -32,37 +33,51 @@ struct SettingsView: View {
 
     var body: some View {
         Form {
-            Section("Historial") {
+            Section(L("Language")) {
+                Picker(L("Language"), selection: $settings.language) {
+                    Text(L("Automatic (Mac language)")).tag("auto")
+                    ForEach(Lang.available, id: \.code) { language in
+                        Text(language.name).tag(language.code)
+                    }
+                }
+            }
+
+            Section(L("History")) {
                 Stepper(
-                    "Recientes a conservar: \(settings.historyLimit)",
+                    L("Recent items to keep: %ld", settings.historyLimit),
                     value: $settings.historyLimit,
                     in: 10...2000,
                     step: 10
                 )
                 Stepper(
-                    "Tamaño máximo por elemento: \(settings.maxItemKB) KB",
+                    L("Max size per item: %ld KB", settings.maxItemKB),
                     value: $settings.maxItemKB,
                     in: 10...10_000,
                     step: 10
                 )
-                Text("Los pines nunca se borran solos. Lo que supere el tamaño máximo no se guarda.")
+                Text(L("Pins are never deleted automatically. Items larger than the max size aren’t saved."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
-            Section("Atajos globales") {
-                Picker("Menú rápido (pines y recientes)", selection: $settings.menuHotKeyID) {
+            Section(L("Global shortcuts")) {
+                Picker(L("Quick menu (pins and recent)"), selection: $settings.menuHotKeyID) {
                     ForEach(HotKeyPreset.all) { preset in
                         Text(preset.name).tag(preset.id)
                     }
                 }
-                Picker("Panel con buscador", selection: $settings.panelHotKeyID) {
+                Picker(L("Search panel"), selection: $settings.panelHotKeyID) {
                     ForEach(HotKeyPreset.all) { preset in
                         Text(preset.name).tag(preset.id)
                     }
                 }
-                if settings.menuHotKeyID == settings.panelHotKeyID {
-                    Text("Los dos atajos son iguales: el segundo no funcionará.")
+                Picker(L("Pin clipboard"), selection: $settings.pinHotKeyID) {
+                    ForEach(HotKeyPreset.all) { preset in
+                        Text(preset.name).tag(preset.id)
+                    }
+                }
+                if Set([settings.menuHotKeyID, settings.panelHotKeyID, settings.pinHotKeyID]).count < 3 {
+                    Text(L("Two shortcuts are the same: only the first one will work."))
                         .font(.caption)
                         .foregroundStyle(.red)
                 }
@@ -73,40 +88,40 @@ struct SettingsView: View {
                 }
             }
 
-            Section("Tecla + clic derecho (experimental)") {
-                Toggle("Abrir el menú de Pinny con tecla + clic derecho", isOn: $settings.rightClickMenuEnabled)
-                Picker("Tecla", selection: $settings.rightClickModifier) {
+            Section(L("Modifier + right-click (experimental)")) {
+                Toggle(L("Open Pinny’s menu with modifier + right-click"), isOn: $settings.rightClickMenuEnabled)
+                Picker(L("Key"), selection: $settings.rightClickModifier) {
                     ForEach(Settings.rightClickModifiers, id: \.id) { modifier in
                         Text(modifier.name).tag(modifier.id)
                     }
                 }
                 .disabled(!settings.rightClickMenuEnabled)
-                Text("Con la tecla pulsada, el clic derecho muestra Pines › carpetas › textos y Recientes en cualquier app. Sin la tecla, el clic derecho funciona como siempre.")
+                Text(L("Hold the key and right-click to see Pins › folders › texts and Recent in any app. Without the key, right-click works as usual."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 if let problem = settings.rightClickProblem {
                     Text("⚠️ \(problem)")
                         .font(.caption)
                         .foregroundStyle(.red)
-                    Button("Reparar permiso") {
+                    Button(L("Repair permission")) {
                         WelcomeWindow.repairAccessibility()
                     }
                 }
             }
 
-            Section("Privacidad") {
-                Text("Apps cuyo contenido copiado no se guarda (un identificador por línea):")
+            Section(L("Privacy")) {
+                Text(L("Apps whose copied content isn’t saved (one bundle ID per line):"))
                     .font(.caption)
                 TextEditor(text: $settings.ignoredApps)
                     .font(.system(.body, design: .monospaced))
                     .frame(height: 100)
-                Text("Para ver el identificador de una app: osascript -e 'id of app \"Nombre\"'")
+                Text(L("To find an app’s bundle ID: osascript -e 'id of app \"Name\"'"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
 
-            Section("Sistema") {
-                Toggle("Abrir Pinny al iniciar sesión", isOn: Binding(
+            Section(L("System")) {
+                Toggle(L("Open Pinny at login"), isOn: Binding(
                     get: { launchAtLogin },
                     set: { setLaunchAtLogin($0) }
                 ))
@@ -115,13 +130,13 @@ struct SettingsView: View {
                         .font(.caption)
                         .foregroundStyle(.red)
                 }
-                Button("Desinstalar Pinny…", role: .destructive) {
+                Button(L("Uninstall Pinny…"), role: .destructive) {
                     Task { @MainActor in Uninstaller.run() }
                 }
             }
 
-            Section("Sincronización") {
-                Text("Disponible en la próxima versión.")
+            Section(L("Sync")) {
+                Text(L("Coming in a future version."))
                     .foregroundStyle(.secondary)
             }
         }
@@ -138,7 +153,7 @@ struct SettingsView: View {
             }
             loginError = nil
         } catch {
-            loginError = "No se pudo cambiar: \(error.localizedDescription)"
+            loginError = L("Couldn’t change it: %@", error.localizedDescription)
         }
         launchAtLogin = SMAppService.mainApp.status == .enabled
     }

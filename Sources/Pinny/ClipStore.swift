@@ -127,6 +127,34 @@ final class ClipStore: ObservableObject {
         scheduleSave()
     }
 
+    enum PinResult { case pinned, alreadyPinned, tooLong, empty }
+
+    /// Ancla un texto (de la selección, el portapapeles o escrito a mano).
+    /// Si ya estaba en Recientes, pasa a Pines; si ya estaba anclado, no se duplica.
+    @discardableResult
+    func pin(_ text: String, folderID: UUID? = nil) -> PinResult {
+        guard !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { return .empty }
+        guard text.utf8.count <= Settings.shared.maxItemBytes else { return .tooLong }
+
+        if let index = items.firstIndex(where: { $0.text == text }) {
+            if items[index].pinned {
+                if let folderID {
+                    items[index].folderID = folderID
+                    scheduleSave()
+                }
+                return .alreadyPinned
+            }
+            var item = items.remove(at: index)
+            item.pinned = true
+            item.folderID = folderID
+            items.insert(item, at: 0)
+        } else {
+            items.insert(ClipItem(text: text, pinned: true, folderID: folderID), at: 0)
+        }
+        scheduleSave()
+        return .pinned
+    }
+
     /// Sube o baja un pin dentro de su grupo (su carpeta, o los sueltos).
     func movePin(_ id: UUID, up: Bool) {
         guard let item = items.first(where: { $0.id == id }), item.pinned else { return }
@@ -205,18 +233,10 @@ final class ClipStore: ObservableObject {
         if let data = try? Data(contentsOf: backupURL), let file = Self.decode(data) {
             items = file.items
             folders = file.folders
-            recoveryMessage = """
-            No se pudo leer el archivo de datos y se ha recuperado la última copia de seguridad.
-            El archivo dañado se ha conservado en:
-            \(corruptURL.path)
-            """
+            recoveryMessage = L("Your data file couldn’t be read, so the latest backup was restored.\nThe damaged file was kept at:\n%@", corruptURL.path)
             flush()
         } else {
-            recoveryMessage = """
-            No se pudo leer el archivo de datos y no hay una copia de seguridad válida. Pinny empieza vacío.
-            El archivo dañado se ha conservado en:
-            \(corruptURL.path)
-            """
+            recoveryMessage = L("Your data file couldn’t be read and there’s no valid backup, so Pinny starts empty.\nThe damaged file was kept at:\n%@", corruptURL.path)
         }
     }
 

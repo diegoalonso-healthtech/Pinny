@@ -68,6 +68,15 @@ final class ServiceProvider: NSObject {
         run(.all, pboard)
     }
 
+    /// Recibe el texto seleccionado (clic derecho → Servicios) y lo ancla.
+    @objc func pinSelection(
+        _ pboard: NSPasteboard,
+        userData: String,
+        error: AutoreleasingUnsafeMutablePointer<NSString>
+    ) {
+        Pinner.pin(pboard.string(forType: .string))
+    }
+
     private func run(_ mode: PickerMode, _ pboard: NSPasteboard) {
         // Si cancelas, no se escribe nada y la app origen queda como estaba.
         guard let chosen = PickerPanel.runModalPicker(mode: mode) else { return }

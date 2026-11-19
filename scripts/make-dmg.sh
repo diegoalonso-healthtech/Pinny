@@ -26,6 +26,11 @@ STAGE="$(mktemp -d)"
 trap 'rm -rf "$STAGE"' EXIT
 cp -R "$APP" "$STAGE/"
 
+simple_dmg() {
+    ln -sfn /Applications "$STAGE/Applications"
+    hdiutil create -volname "Pinny" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
+}
+
 if command -v create-dmg >/dev/null 2>&1; then
     # Fondo para pantallas normales y Retina en un solo TIFF.
     BG="build/dmg-background.tiff"
@@ -42,13 +47,22 @@ if command -v create-dmg >/dev/null 2>&1; then
         --hide-extension "Pinny.app" \
         --app-drop-link 440 190 \
         "$DMG" \
-        "$STAGE"
+        "$STAGE" || {
+            # En máquinas sin sesión gráfica (p. ej. GitHub Actions) puede fallar al
+            # colocar los iconos con el Finder: entonces se crea el DMG sencillo.
+            echo "create-dmg ha fallado: se crea un DMG sencillo sin fondo."
+            rm -f "$DMG"
+            simple_dmg
+        }
     rm -f "$BG"
 else
     echo "create-dmg no está instalado: se crea un DMG sencillo sin fondo."
     echo "Para el DMG con fondo: brew install create-dmg"
-    ln -s /Applications "$STAGE/Applications"
-    hdiutil create -volname "Pinny" -srcfolder "$STAGE" -ov -format UDZO "$DMG"
+    simple_dmg
 fi
 
+# Huella SHA-256 para que cualquiera pueda comprobar que la descarga no se ha alterado.
+( cd build && shasum -a 256 "$(basename "$DMG")" > "$(basename "$DMG").sha256" )
+
 echo "Listo: $DMG"
+cat "$DMG.sha256"

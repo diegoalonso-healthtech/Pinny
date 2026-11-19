@@ -18,7 +18,9 @@ struct HotKeyPreset: Identifiable, Hashable {
         HotKeyPreset(id: "ctrl-opt-shift-v", name: "⌃⌥⇧V", keyCode: kVK_ANSI_V, modifiers: controlKey | optionKey | shiftKey),
         HotKeyPreset(id: "ctrl-opt-c", name: "⌃⌥C", keyCode: kVK_ANSI_C, modifiers: controlKey | optionKey),
         HotKeyPreset(id: "ctrl-cmd-v", name: "⌃⌘V", keyCode: kVK_ANSI_V, modifiers: controlKey | cmdKey),
-        HotKeyPreset(id: "ctrl-opt-space", name: "⌃⌥Espacio", keyCode: kVK_Space, modifiers: controlKey | optionKey)
+        HotKeyPreset(id: "ctrl-opt-p", name: "⌃⌥P", keyCode: kVK_ANSI_P, modifiers: controlKey | optionKey),
+        HotKeyPreset(id: "ctrl-cmd-p", name: "⌃⌘P", keyCode: kVK_ANSI_P, modifiers: controlKey | cmdKey),
+        HotKeyPreset(id: "ctrl-opt-space", name: "⌃⌥" + L("Space"), keyCode: kVK_Space, modifiers: controlKey | optionKey)
     ]
 }
 
@@ -47,6 +49,14 @@ final class Settings: ObservableObject {
     @Published var capturePaused: Bool {
         didSet { UserDefaults.standard.set(capturePaused, forKey: "capturePaused") }
     }
+    /// Idioma de la interfaz: "auto" (el del Mac) o un código de Lang.available.
+    @Published var language: String {
+        didSet {
+            UserDefaults.standard.set(language, forKey: "language")
+            Lang.apply(language)
+        }
+    }
+
     /// Avisos de atajos que macOS no ha aceptado (no se guardan).
     @Published var hotKeyProblems: [String] = []
 
@@ -68,9 +78,9 @@ final class Settings: ObservableObject {
     @Published var rightClickProblem: String?
 
     static let rightClickModifiers: [(id: String, name: String)] = [
-        ("cmd", "⌘ Comando"),
-        ("opt", "⌥ Opción"),
-        ("shift", "⇧ Mayúsculas")
+        ("cmd", L("⌘ Command")),
+        ("opt", L("⌥ Option")),
+        ("shift", L("⇧ Shift"))
     ]
 
     var rightClickFlags: CGEventFlags {
@@ -100,6 +110,12 @@ final class Settings: ObservableObject {
             NotificationCenter.default.post(name: .hotKeysChanged, object: nil)
         }
     }
+    @Published var pinHotKeyID: String {
+        didSet {
+            UserDefaults.standard.set(pinHotKeyID, forKey: "pinHotKeyID")
+            NotificationCenter.default.post(name: .hotKeysChanged, object: nil)
+        }
+    }
     @Published var panelHotKeyID: String {
         didSet {
             UserDefaults.standard.set(panelHotKeyID, forKey: "panelHotKeyID")
@@ -114,15 +130,21 @@ final class Settings: ObservableObject {
         capturePaused = d.bool(forKey: "capturePaused")
         rightClickMenuEnabled = d.bool(forKey: "rightClickMenuEnabled")
         rightClickModifier = d.string(forKey: "rightClickModifier") ?? "cmd"
+        language = d.string(forKey: "language") ?? "auto"
         ignoredApps = d.string(forKey: "ignoredApps") ?? Settings.defaultIgnoredApps
         menuHotKeyID = d.string(forKey: "menuHotKeyID") ?? "ctrl-opt-v"
         panelHotKeyID = d.string(forKey: "panelHotKeyID") ?? "ctrl-opt-shift-v"
+        pinHotKeyID = d.string(forKey: "pinHotKeyID") ?? "ctrl-opt-p"
     }
 
     var maxItemBytes: Int { maxItemKB * 1024 }
 
     var menuHotKey: HotKeyPreset {
         HotKeyPreset.all.first { $0.id == menuHotKeyID } ?? HotKeyPreset.all[0]
+    }
+
+    var pinHotKey: HotKeyPreset {
+        HotKeyPreset.all.first { $0.id == pinHotKeyID } ?? HotKeyPreset.all[0]
     }
 
     var panelHotKey: HotKeyPreset {

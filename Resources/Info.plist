@@ -2,6 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleLocalizations</key>
+    <array>
+        <string>en</string>
+        <string>es</string>
+        <string>fr</string>
+        <string>de</string>
+        <string>it</string>
+        <string>pt-BR</string>
+    </array>
     <key>CFBundleName</key>
     <string>Pinny</string>
     <key>CFBundleDisplayName</key>
@@ -15,9 +26,9 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
+    <string>1.1.0</string>
     <key>CFBundleVersion</key>
-    <string>16</string>
+    <string>18</string>
     <key>LSMinimumSystemVersion</key>
     <string>14.0</string>
     <key>LSUIElement</key>
@@ -30,7 +41,7 @@
             <key>NSMenuItem</key>
             <dict>
                 <key>default</key>
-                <string>Pinny: Pines</string>
+                <string>Pinny: Pins</string>
             </dict>
             <key>NSMessage</key>
             <string>pickPinned</string>
@@ -49,7 +60,7 @@
             <key>NSMenuItem</key>
             <dict>
                 <key>default</key>
-                <string>Pinny: Recientes</string>
+                <string>Pinny: Recent</string>
             </dict>
             <key>NSMessage</key>
             <string>pickRecent</string>
@@ -68,7 +79,7 @@
             <key>NSMenuItem</key>
             <dict>
                 <key>default</key>
-                <string>Pinny: Buscar en todo</string>
+                <string>Pinny: Search everything</string>
             </dict>
             <key>NSMessage</key>
             <string>pickAll</string>
@@ -79,6 +90,23 @@
             <key>NSPortName</key>
             <string>Pinny</string>
             <key>NSReturnTypes</key>
+            <array>
+                <string>NSStringPboardType</string>
+            </array>
+        </dict>
+        <dict>
+            <key>NSMenuItem</key>
+            <dict>
+                <key>default</key>
+                <string>Pinny: Pin selection</string>
+            </dict>
+            <key>NSMessage</key>
+            <string>pinSelection</string>
+            <key>NSPortName</key>
+            <string>Pinny</string>
+            <key>NSRequiredContext</key>
+            <dict/>
+            <key>NSSendTypes</key>
             <array>
                 <string>NSStringPboardType</string>
             </array>

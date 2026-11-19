@@ -1,5 +1,6 @@
 import AppKit
 import CoreGraphics
+import ApplicationServices
 
 /// Estado que comparte el callback C del event tap (no aislado al hilo principal).
 enum RightClickTapState {
@@ -56,12 +57,15 @@ final class RightClickMonitor {
         }
         guard RightClickTapState.tap == nil else { return }
 
-        if start() {
+        // Sin permiso, no se intenta crear el tap: hacerlo dispara el aviso de macOS
+        // nada más abrir Pinny, y la guía de bienvenida lo tapa. Se espera en silencio
+        // a que el usuario conceda el permiso desde la guía y se activa solo.
+        if AXIsProcessTrusted(), start() {
             settings.rightClickProblem = nil
             retryTimer?.invalidate()
             retryTimer = nil
         } else {
-            settings.rightClickProblem = "Pendiente de permiso: concede Accesibilidad a Pinny (y Monitorización de entrada si macOS lo pide). Se activará solo."
+            settings.rightClickProblem = L("Waiting for permission: allow Pinny in Accessibility (and Input Monitoring if macOS asks). It will turn on by itself.")
             scheduleRetry()
         }
     }
