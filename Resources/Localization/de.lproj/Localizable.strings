@@ -61,7 +61,6 @@
 "Global shortcuts" = "Globale Kurzbefehle";
 "Quick menu (pins and recent)" = "Schnellmenü (Angeheftet und Zuletzt kopiert)";
 "Search panel" = "Suche";
-"Both shortcuts are the same: the second one won’t work." = "Beide Kurzbefehle sind gleich: Der zweite funktioniert nicht.";
 "Modifier + right-click (experimental)" = "Taste + Rechtsklick (experimentell)";
 "Open Pinny’s menu with modifier + right-click" = "Pinny-Menü mit Taste + Rechtsklick öffnen";
 "Key" = "Taste";
@@ -113,3 +112,17 @@
 "Language" = "Sprache";
 "Automatic" = "Automatisch";
 "Automatic (Mac language)" = "Automatisch (Sprache des Mac)";
+"Pin selection: %@" = "Auswahl anheften: %@";
+"Pin last copied: %@" = "Zuletzt Kopiertes anheften: %@";
+"New pin…" = "Neu anheften …";
+"New pin" = "Neu anheften";
+"Type or paste the text you want to keep." = "Gib den Text ein, den du behalten möchtest, oder setze ihn ein.";
+"Folder:" = "Ordner:";
+"Save" = "Sichern";
+"Pinned 📌" = "Angeheftet 📌";
+"Already pinned 📌" = "Bereits angeheftet 📌";
+"Nothing to pin" = "Nichts zum Anheften";
+"Too long to pin" = "Zu lang zum Anheften";
+"Pin clipboard" = "Zwischenablage anheften";
+"Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "%@ (Zwischenablage anheften) konnte nicht aktiviert werden. Möglicherweise verwendet eine andere App diese Kombination.";
+"Two shortcuts are the same: only the first one will work." = "Zwei Kurzbefehle sind gleich: Nur der erste funktioniert.";

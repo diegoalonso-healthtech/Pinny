@@ -50,7 +50,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         ClipStore.shared.flush(waitUntilWritten: true)
     }
 
-    /// Atajos elegidos en Ajustes: menú rápido y panel con buscador.
+    /// Atajos elegidos en Ajustes: menú rápido, buscador y anclar portapapeles.
     private func registerHotKeys() {
         let settings = Settings.shared
         let menuKey = settings.menuHotKey
@@ -69,6 +69,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         }
         if !panelOK {
             problems.append(L("Couldn’t turn on %@ (search panel). Another app may be using it.", panelKey.name))
+        }
+
+        let pinKey = settings.pinHotKey
+        let pinOK = hotKeys.register(id: 3, keyCode: pinKey.keyCode, modifiers: pinKey.modifiers) {
+            Task { @MainActor in Pinner.pinClipboard() }
+        }
+        if !pinOK {
+            problems.append(L("Couldn’t turn on %@ (pin clipboard). Another app may be using it.", pinKey.name))
         }
 
         settings.hotKeyProblems = problems
@@ -136,6 +144,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             pasteboard.setString(text, forType: .string)
         }) {
             menu.addItem(item)
+        }
+
+        let pinItems = PopupMenu.pinActions(selection: SelectionReader.selectedText())
+        if !pinItems.isEmpty {
+            menu.addItem(.separator())
+            pinItems.forEach { menu.addItem($0) }
         }
 
         menu.addItem(.separator())

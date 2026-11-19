@@ -18,6 +18,8 @@ struct HotKeyPreset: Identifiable, Hashable {
         HotKeyPreset(id: "ctrl-opt-shift-v", name: "⌃⌥⇧V", keyCode: kVK_ANSI_V, modifiers: controlKey | optionKey | shiftKey),
         HotKeyPreset(id: "ctrl-opt-c", name: "⌃⌥C", keyCode: kVK_ANSI_C, modifiers: controlKey | optionKey),
         HotKeyPreset(id: "ctrl-cmd-v", name: "⌃⌘V", keyCode: kVK_ANSI_V, modifiers: controlKey | cmdKey),
+        HotKeyPreset(id: "ctrl-opt-p", name: "⌃⌥P", keyCode: kVK_ANSI_P, modifiers: controlKey | optionKey),
+        HotKeyPreset(id: "ctrl-cmd-p", name: "⌃⌘P", keyCode: kVK_ANSI_P, modifiers: controlKey | cmdKey),
         HotKeyPreset(id: "ctrl-opt-space", name: "⌃⌥" + L("Space"), keyCode: kVK_Space, modifiers: controlKey | optionKey)
     ]
 }
@@ -108,6 +110,12 @@ final class Settings: ObservableObject {
             NotificationCenter.default.post(name: .hotKeysChanged, object: nil)
         }
     }
+    @Published var pinHotKeyID: String {
+        didSet {
+            UserDefaults.standard.set(pinHotKeyID, forKey: "pinHotKeyID")
+            NotificationCenter.default.post(name: .hotKeysChanged, object: nil)
+        }
+    }
     @Published var panelHotKeyID: String {
         didSet {
             UserDefaults.standard.set(panelHotKeyID, forKey: "panelHotKeyID")
@@ -126,12 +134,17 @@ final class Settings: ObservableObject {
         ignoredApps = d.string(forKey: "ignoredApps") ?? Settings.defaultIgnoredApps
         menuHotKeyID = d.string(forKey: "menuHotKeyID") ?? "ctrl-opt-v"
         panelHotKeyID = d.string(forKey: "panelHotKeyID") ?? "ctrl-opt-shift-v"
+        pinHotKeyID = d.string(forKey: "pinHotKeyID") ?? "ctrl-opt-p"
     }
 
     var maxItemBytes: Int { maxItemKB * 1024 }
 
     var menuHotKey: HotKeyPreset {
         HotKeyPreset.all.first { $0.id == menuHotKeyID } ?? HotKeyPreset.all[0]
+    }
+
+    var pinHotKey: HotKeyPreset {
+        HotKeyPreset.all.first { $0.id == pinHotKeyID } ?? HotKeyPreset.all[0]
     }
 
     var panelHotKey: HotKeyPreset {

@@ -47,6 +47,10 @@ enum PopupMenu {
         if pinsMenu.items.isEmpty {
             pinsMenu.addItem(placeholder(L("No pins")))
         }
+        pinsMenu.addItem(.separator())
+        pinsMenu.addItem(ActionMenuItem(title: L("New pin…")) {
+            Task { @MainActor in PinEditor.newPin() }
+        })
         let pinsItem = NSMenuItem(title: L("Pins"), action: nil, keyEquivalent: "")
         pinsItem.submenu = pinsMenu
 
@@ -65,15 +69,39 @@ enum PopupMenu {
         return [pinsItem, recentItem]
     }
 
+    /// «Anclar selección» (si hay texto seleccionado) y «Anclar lo último copiado».
+    /// `selection` se lee antes de abrir el menú, mientras la app de origen tiene el foco.
+    static func pinActions(selection: String?) -> [NSMenuItem] {
+        var result: [NSMenuItem] = []
+        if let selection {
+            result.append(ActionMenuItem(title: L("Pin selection: %@", label(selection))) {
+                Task { @MainActor in Pinner.pin(selection) }
+            })
+        }
+        if let last = Pinner.lastCopied, last.text != selection {
+            result.append(ActionMenuItem(title: L("Pin last copied: %@", label(last.text))) {
+                Task { @MainActor in Pinner.pin(last.text) }
+            })
+        }
+        return result
+    }
+
     /// Muestra el menú en la posición del cursor y pega lo elegido en la app activa.
     static func show() {
         let previousApp = NSWorkspace.shared.frontmostApplication
+        let selection = SelectionReader.selectedText()
 
         let menu = makeMenu()
         for item in items(onSelect: { text in
             Paster.paste(text, into: previousApp)
         }) {
             menu.addItem(item)
+        }
+
+        let pinItems = pinActions(selection: selection)
+        if !pinItems.isEmpty {
+            menu.addItem(.separator())
+            pinItems.forEach { menu.addItem($0) }
         }
 
         menu.addItem(.separator())

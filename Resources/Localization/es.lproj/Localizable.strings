@@ -61,7 +61,6 @@
 "Global shortcuts" = "Atajos globales";
 "Quick menu (pins and recent)" = "Menú rápido (pines y recientes)";
 "Search panel" = "Buscador";
-"Both shortcuts are the same: the second one won’t work." = "Los dos atajos son iguales: el segundo no funcionará.";
 "Modifier + right-click (experimental)" = "Tecla + clic derecho (experimental)";
 "Open Pinny’s menu with modifier + right-click" = "Abrir el menú de Pinny con tecla + clic derecho";
 "Key" = "Tecla";
@@ -113,3 +112,17 @@
 "Language" = "Idioma";
 "Automatic" = "Automático";
 "Automatic (Mac language)" = "Automático (idioma del Mac)";
+"Pin selection: %@" = "Anclar selección: %@";
+"Pin last copied: %@" = "Anclar lo último copiado: %@";
+"New pin…" = "Nuevo pin…";
+"New pin" = "Nuevo pin";
+"Type or paste the text you want to keep." = "Escribe o pega el texto que quieres guardar.";
+"Folder:" = "Carpeta:";
+"Save" = "Guardar";
+"Pinned 📌" = "Anclado 📌";
+"Already pinned 📌" = "Ya estaba anclado 📌";
+"Nothing to pin" = "No hay nada que anclar";
+"Too long to pin" = "Demasiado largo para anclar";
+"Pin clipboard" = "Anclar portapapeles";
+"Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "No se pudo activar %@ (anclar portapapeles). Puede que otra app lo esté usando.";
+"Two shortcuts are the same: only the first one will work." = "Hay dos atajos iguales: solo funcionará el primero.";

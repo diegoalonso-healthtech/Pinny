@@ -20,7 +20,11 @@ Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't ru
 ## Features
 
 - **History** of everything you copy (last 20 items by default, up to 2,000).
-- **Pins** that never expire, can be reordered and grouped in **folders**.
+- **Pins** that never expire, can be reordered and grouped in **folders**. Save one in several ways:
+  - **Pin selection:** select text in any app and right-click → Services → *Pinny: Pin selection*, or use Pinny's menu (quick menu or modifier + right-click).
+  - **Pin clipboard (⌃⌥P):** copy with ⌘C and press ⌃⌥P.
+  - **Pin last copied** from the quick menu or the menu bar icon.
+  - **New pin…** at the bottom of the Pins menu: type or paste any text and choose a folder.
 - **Quick menu (⌃⌥V)** right at your cursor, in any app:
 
   ```
@@ -37,7 +41,7 @@ Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't ru
 - **Modifier + right-click (optional):** hold ⌘ (configurable) and right-click to open Pinny's menu anywhere, even in apps that don't support macOS Services. Without the key, right-click works as usual.
 <p align="center"><img src="docs/images/right-click.png" alt="Holding Command and right-clicking in Notes opens Pinny's menu with recent items" width="680"></p>
 
-- **macOS Services:** *Pinny: Pins*, *Pinny: Recent*, *Pinny: Search everything* in right-click → Services.
+- **macOS Services:** *Pinny: Pins*, *Pinny: Recent*, *Pinny: Search everything* and *Pinny: Pin selection* in right-click → Services.
 - **Keeps your clipboard:** after pasting a pin, whatever you had copied is restored.
 - **Privacy first:** everything stays on your Mac (`~/Library/Application Support/Pinny`, owner-only permissions). No network. Skips content that password managers mark as concealed, ignores apps you choose, and limits item size.
 - **Safe storage:** automatic backup on every launch; a damaged data file is set aside, never overwritten.

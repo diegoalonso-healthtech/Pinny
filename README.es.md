@@ -20,7 +20,11 @@ Pinny es un gestor de portapapeles gratuito y de código abierto **solo para mac
 ## Qué hace
 
 - **Historial** de todo lo que copias (por defecto los 20 últimos, ampliable hasta 2000).
-- **Pines** que no caducan nunca, ordenables y agrupables en **carpetas**.
+- **Pines** que no caducan nunca, ordenables y agrupables en **carpetas**. Puedes guardar uno de varias formas:
+  - **Anclar selección:** selecciona un texto en cualquier app y haz clic derecho → Servicios → *Pinny: Anclar selección*, o usa el menú de Pinny (menú rápido o tecla + clic derecho).
+  - **Anclar portapapeles (⌃⌥P):** copia con ⌘C y pulsa ⌃⌥P.
+  - **Anclar lo último copiado** desde el menú rápido o el icono de la barra de menús.
+  - **Nuevo pin…** al final del menú Pines: escribe o pega cualquier texto y elige carpeta.
 - **Menú rápido (⌃⌥V)** en la posición del cursor, en cualquier app:
 
   ```
@@ -37,7 +41,7 @@ Pinny es un gestor de portapapeles gratuito y de código abierto **solo para mac
 - **Tecla + clic derecho (opcional):** con ⌘ pulsada (configurable), el clic derecho abre el menú de Pinny en cualquier app, incluso en las que no admiten los Servicios de macOS. Sin la tecla, el clic derecho funciona como siempre.
 <p align="center"><img src="docs/images/right-click.png" alt="Con Comando pulsado, el clic derecho en Notas abre el menú de Pinny con los recientes" width="680"></p>
 
-- **Servicios de macOS:** *Pinny: Pines*, *Pinny: Recientes* y *Pinny: Buscar en todo*, en clic derecho → Servicios.
+- **Servicios de macOS:** *Pinny: Pines*, *Pinny: Recientes*, *Pinny: Buscar en todo* y *Pinny: Anclar selección*, en clic derecho → Servicios.
 - **Respeta tu portapapeles:** después de pegar un pin, se restaura lo que tenías copiado.
 - **Privacidad ante todo:** todo se queda en tu Mac (`~/Library/Application Support/Pinny`, con permisos solo para tu usuario). Sin red. Ignora lo que los gestores de contraseñas marcan como oculto, las apps que elijas y los elementos demasiado grandes.
 - **Datos a salvo:** copia de seguridad automática en cada arranque; si el archivo de datos se daña, se aparta y nunca se sobrescribe.

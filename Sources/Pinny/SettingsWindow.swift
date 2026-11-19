@@ -71,8 +71,13 @@ struct SettingsView: View {
                         Text(preset.name).tag(preset.id)
                     }
                 }
-                if settings.menuHotKeyID == settings.panelHotKeyID {
-                    Text(L("Both shortcuts are the same: the second one won’t work."))
+                Picker(L("Pin clipboard"), selection: $settings.pinHotKeyID) {
+                    ForEach(HotKeyPreset.all) { preset in
+                        Text(preset.name).tag(preset.id)
+                    }
+                }
+                if Set([settings.menuHotKeyID, settings.panelHotKeyID, settings.pinHotKeyID]).count < 3 {
+                    Text(L("Two shortcuts are the same: only the first one will work."))
                         .font(.caption)
                         .foregroundStyle(.red)
                 }

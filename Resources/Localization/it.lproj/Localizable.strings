@@ -61,7 +61,6 @@
 "Global shortcuts" = "Abbreviazioni globali";
 "Quick menu (pins and recent)" = "Menu rapido (fissati e recenti)";
 "Search panel" = "Pannello di ricerca";
-"Both shortcuts are the same: the second one won’t work." = "Le due abbreviazioni sono uguali: la seconda non funzionerà.";
 "Modifier + right-click (experimental)" = "Tasto + clic destro (sperimentale)";
 "Open Pinny’s menu with modifier + right-click" = "Apri il menu di Pinny con tasto + clic destro";
 "Key" = "Tasto";
@@ -113,3 +112,17 @@
 "Language" = "Lingua";
 "Automatic" = "Automatica";
 "Automatic (Mac language)" = "Automatica (lingua del Mac)";
+"Pin selection: %@" = "Fissa selezione: %@";
+"Pin last copied: %@" = "Fissa l’ultima copia: %@";
+"New pin…" = "Nuovo elemento fissato…";
+"New pin" = "Nuovo elemento fissato";
+"Type or paste the text you want to keep." = "Scrivi o incolla il testo che vuoi conservare.";
+"Folder:" = "Cartella:";
+"Save" = "Salva";
+"Pinned 📌" = "Fissato 📌";
+"Already pinned 📌" = "Già fissato 📌";
+"Nothing to pin" = "Niente da fissare";
+"Too long to pin" = "Troppo lungo da fissare";
+"Pin clipboard" = "Fissa gli appunti";
+"Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "Impossibile attivare %@ (fissa gli appunti). Forse lo usa un’altra app.";
+"Two shortcuts are the same: only the first one will work." = "Due abbreviazioni sono uguali: funzionerà solo la prima.";

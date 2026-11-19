@@ -61,7 +61,6 @@
 "Global shortcuts" = "Raccourcis globaux";
 "Quick menu (pins and recent)" = "Menu rapide (épinglés et récents)";
 "Search panel" = "Panneau de recherche";
-"Both shortcuts are the same: the second one won’t work." = "Les deux raccourcis sont identiques : le second ne fonctionnera pas.";
 "Modifier + right-click (experimental)" = "Touche + clic droit (expérimental)";
 "Open Pinny’s menu with modifier + right-click" = "Ouvrir le menu de Pinny avec touche + clic droit";
 "Key" = "Touche";
@@ -113,3 +112,17 @@
 "Language" = "Langue";
 "Automatic" = "Automatique";
 "Automatic (Mac language)" = "Automatique (langue du Mac)";
+"Pin selection: %@" = "Épingler la sélection : %@";
+"Pin last copied: %@" = "Épingler la dernière copie : %@";
+"New pin…" = "Nouvelle épingle…";
+"New pin" = "Nouvelle épingle";
+"Type or paste the text you want to keep." = "Saisissez ou collez le texte à conserver.";
+"Folder:" = "Dossier :";
+"Save" = "Enregistrer";
+"Pinned 📌" = "Épinglé 📌";
+"Already pinned 📌" = "Déjà épinglé 📌";
+"Nothing to pin" = "Rien à épingler";
+"Too long to pin" = "Trop long pour être épinglé";
+"Pin clipboard" = "Épingler le presse-papiers";
+"Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "Impossible d’activer %@ (épingler le presse-papiers). Une autre app l’utilise peut-être.";
+"Two shortcuts are the same: only the first one will work." = "Deux raccourcis sont identiques : seul le premier fonctionnera.";

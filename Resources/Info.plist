@@ -94,6 +94,23 @@
                 <string>NSStringPboardType</string>
             </array>
         </dict>
+        <dict>
+            <key>NSMenuItem</key>
+            <dict>
+                <key>default</key>
+                <string>Pinny: Pin selection</string>
+            </dict>
+            <key>NSMessage</key>
+            <string>pinSelection</string>
+            <key>NSPortName</key>
+            <string>Pinny</string>
+            <key>NSRequiredContext</key>
+            <dict/>
+            <key>NSSendTypes</key>
+            <array>
+                <string>NSStringPboardType</string>
+            </array>
+        </dict>
     </array>
 </dict>
 </plist>
