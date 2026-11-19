@@ -61,6 +61,22 @@ No Xcode, no Terminal, no building. Every release includes a pre-built installer
 
 Pinny is not notarized by Apple yet, so the first time macOS will block it. Go to System Settings → Privacy & Security and click **Open Anyway** (only once).
 
+#### Verify the download (optional)
+
+Each release is built by GitHub Actions straight from this repository and includes two ways to check that the DMG hasn't been tampered with:
+
+- **Build provenance:** a signed attestation (Sigstore) proving the DMG was built from this repository. With the [GitHub CLI](https://cli.github.com):
+
+  ```sh
+  gh attestation verify Pinny-<version>.dmg --repo diegoalonso-healthtech/Pinny
+  ```
+
+- **SHA-256 checksum:** compare it with the `.sha256` file attached to the release:
+
+  ```sh
+  shasum -a 256 Pinny-<version>.dmg
+  ```
+
 ### Option 2: build from source
 
 You need Xcode or the Command Line Tools (`xcode-select --install`).
@@ -78,11 +94,7 @@ brew install create-dmg   # once
 ./scripts/make-dmg.sh
 ```
 
-Tip: with the default ad-hoc signature, macOS treats every rebuild as a new app and the Accessibility permission stops working. Sign with a self-signed code-signing certificate from Keychain Access to avoid it:
-
-```sh
-SIGN_IDENTITY="Your certificate name" ./scripts/build-app.sh
-```
+With the default ad-hoc signature, macOS ties the permission to that exact build, so after every rebuild you have to grant it again (use **Repair permission**). You can sign with your own certificate instead (`SIGN_IDENTITY="Certificate name" ./scripts/build-app.sh`), but then anyone holding that certificate's private key could sign an app that inherits Pinny's permission, so keep it safe.
 
 ## First launch
 
@@ -95,6 +107,8 @@ A setup guide walks you through three steps:
 You can reopen the guide from the menu bar icon → *Setup guide…*.
 
 **Permission is on but nothing happens?** Use **Repair permission** in the guide or in Settings. It resets the stored permission and asks again.
+
+**After updating Pinny** macOS asks for the permission again. This is expected: releases use an ad-hoc signature, so macOS ties the permission to each exact build and a new or modified copy never inherits it. Pinny detects it, opens the guide and you only need to click **Repair permission**.
 
 ## Languages
 

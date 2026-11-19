@@ -61,6 +61,22 @@ Sin Xcode, sin Terminal y sin compilar. Cada versión incluye el instalador list
 
 Pinny todavía no está notarizada por Apple, así que la primera vez macOS la bloqueará. Ve a Ajustes del Sistema → Privacidad y seguridad y pulsa **Abrir igualmente** (solo una vez).
 
+#### Comprobar la descarga (opcional)
+
+Cada versión la compila GitHub Actions directamente desde este repositorio e incluye dos formas de comprobar que el DMG no se ha manipulado:
+
+- **Procedencia de la compilación:** una attestation firmada (Sigstore) que demuestra que el DMG se compiló desde este repositorio. Con [GitHub CLI](https://cli.github.com):
+
+  ```sh
+  gh attestation verify Pinny-<versión>.dmg --repo diegoalonso-healthtech/Pinny
+  ```
+
+- **Huella SHA-256:** compárala con el archivo `.sha256` adjunto a la versión:
+
+  ```sh
+  shasum -a 256 Pinny-<versión>.dmg
+  ```
+
 ### Opción 2: compilar desde el código
 
 Necesitas Xcode o las Command Line Tools (`xcode-select --install`).
@@ -78,11 +94,7 @@ brew install create-dmg   # una sola vez
 ./scripts/make-dmg.sh
 ```
 
-Consejo: con la firma ad-hoc por defecto, macOS trata cada recompilación como una app nueva y el permiso de Accesibilidad deja de funcionar. Para evitarlo, firma con un certificado de firma de código autofirmado creado en Acceso a Llaveros:
-
-```sh
-SIGN_IDENTITY="Nombre de tu certificado" ./scripts/build-app.sh
-```
+Con la firma ad-hoc por defecto, macOS ata el permiso a esa compilación exacta, así que tras cada recompilación hay que volver a darlo (con **Reparar permiso**). Puedes firmar con un certificado propio (`SIGN_IDENTITY="Nombre del certificado" ./scripts/build-app.sh`), pero entonces cualquiera que tenga su clave privada podría firmar una app que herede el permiso de Pinny, así que guárdala bien.
 
 ## Primer arranque
 
@@ -95,6 +107,8 @@ Una guía te lleva por tres pasos:
 Puedes volver a abrir la guía desde el icono de la barra de menús → *Guía de configuración…*.
 
 **¿El permiso está activado pero no funciona?** Pulsa **Reparar permiso** en la guía o en Ajustes: borra el permiso guardado y lo vuelve a pedir.
+
+**Tras actualizar Pinny** macOS vuelve a pedir el permiso. Es lo esperado: las versiones usan firma ad-hoc, así que macOS ata el permiso a cada compilación exacta y una copia nueva o modificada nunca lo hereda. Pinny lo detecta, abre la guía y solo tienes que pulsar **Reparar permiso**.
 
 ## Idiomas
 

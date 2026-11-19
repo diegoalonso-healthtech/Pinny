@@ -126,3 +126,7 @@
 "Pin clipboard" = "Anclar portapapeles";
 "Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "No se pudo activar %@ (anclar portapapeles). Puede que otra app lo esté usando.";
 "Two shortcuts are the same: only the first one will work." = "Hay dos atajos iguales: solo funcionará el primero.";
+
+"Pinny was updated" = "Pinny se ha actualizado";
+"macOS asks for the permission again after every Pinny update. It’s expected and only takes a moment: click “Repair permission” and turn Pinny on again." = "macOS vuelve a pedir el permiso tras cada actualización de Pinny. Es normal y solo lleva un momento: pulsa «Reparar permiso» y vuelve a activar Pinny.";
+"Repair permission…" = "Reparar permiso…";

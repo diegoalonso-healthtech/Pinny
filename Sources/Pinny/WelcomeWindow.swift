@@ -21,14 +21,41 @@ enum WelcomeWindow {
     /// - no se ha completado esta versión de la guía, o
     /// - falta el permiso (p. ej. tras reinstalar: el desinstalador lo quita).
     static func showIfNeeded() {
+        recordPermissionIfGranted()
         guard !guideCompleted || !AXIsProcessTrusted() else { return }
         show()
     }
 
+    // MARK: - Aviso tras actualizar
+
+    /// Compilación con la que el permiso funcionaba por última vez.
+    private static let permissionBuildKey = "permissionGrantedBuild"
+    private static var currentBuild: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
+    }
+
+    /// Guarda la compilación actual si el permiso está concedido.
+    static func recordPermissionIfGranted() {
+        guard AXIsProcessTrusted() else { return }
+        UserDefaults.standard.set(currentBuild, forKey: permissionBuildKey)
+    }
+
+    /// Verdadero si el permiso funcionaba con una versión anterior y ahora falta.
+    /// Pasa en cada actualización: con firma ad-hoc, macOS ata el permiso al binario
+    /// exacto, así que una versión nueva (o una copia modificada) no lo hereda.
+    static var permissionLostAfterUpdate: Bool {
+        guard !AXIsProcessTrusted(),
+              let previous = UserDefaults.standard.string(forKey: permissionBuildKey) else { return false }
+        return previous != currentBuild
+    }
+
+    /// Más alta cuando muestra el aviso de actualización.
+    fileprivate static var guideHeight: CGFloat { permissionLostAfterUpdate ? 830 : 720 }
+
     static func show() {
         if window == nil {
             let newWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 560, height: 720),
+                contentRect: NSRect(x: 0, y: 0, width: 560, height: guideHeight),
                 styleMask: [.titled, .closable],
                 backing: .buffered,
                 defer: false
@@ -152,6 +179,9 @@ private struct WelcomeView: View {
 
     @ObservedObject private var settings = Settings.shared
     @State private var accessibilityGranted = AXIsProcessTrusted()
+    @State private var updatedWithoutPermission = WelcomeWindow.permissionLostAfterUpdate
+    /// Fija la altura al abrir, para que no salte al conceder el permiso.
+    @State private var height = WelcomeWindow.guideHeight
     @State private var testText = ""
     @State private var testPassed = false
     @State private var showHelp = false
@@ -187,6 +217,10 @@ private struct WelcomeView: View {
                 }
             }
 
+            if updatedWithoutPermission && !accessibilityGranted {
+                updateNotice
+            }
+
             step(
                 number: 1,
                 title: L("Let Pinny paste for you"),
@@ -219,10 +253,31 @@ private struct WelcomeView: View {
             }
         }
         .padding(24)
-        .frame(width: 560, height: 720)
+        .frame(width: 560, height: height)
         .onReceive(timer) { _ in
             accessibilityGranted = AXIsProcessTrusted()
+            if accessibilityGranted { WelcomeWindow.recordPermissionIfGranted() }
         }
+    }
+
+    /// Aviso tras una actualización: explica que volver a dar el permiso es lo esperado.
+    private var updateNotice: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "arrow.triangle.2.circlepath")
+                .font(.title3)
+                .foregroundStyle(.blue)
+            VStack(alignment: .leading, spacing: 6) {
+                Text(L("Pinny was updated"))
+                    .font(.headline)
+                Text(L("macOS asks for the permission again after every Pinny update. It’s expected and only takes a moment: click “Repair permission” and turn Pinny on again."))
+                    .font(.callout)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button(L("Repair permission…"), action: WelcomeWindow.repairAccessibility)
+            }
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.blue.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
     }
 
     /// Paso 2: pregunta si se quiere activar el menú con tecla + clic derecho.

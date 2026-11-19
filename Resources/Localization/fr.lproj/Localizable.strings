@@ -126,3 +126,7 @@
 "Pin clipboard" = "Épingler le presse-papiers";
 "Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "Impossible d’activer %@ (épingler le presse-papiers). Une autre app l’utilise peut-être.";
 "Two shortcuts are the same: only the first one will work." = "Deux raccourcis sont identiques : seul le premier fonctionnera.";
+
+"Pinny was updated" = "Pinny a été mis à jour";
+"macOS asks for the permission again after every Pinny update. It’s expected and only takes a moment: click “Repair permission” and turn Pinny on again." = "macOS redemande l’autorisation après chaque mise à jour de Pinny. C’est normal et ça ne prend qu’un instant : cliquez sur « Réparer l’autorisation » et réactivez Pinny.";
+"Repair permission…" = "Réparer l’autorisation…";

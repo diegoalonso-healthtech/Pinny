@@ -126,3 +126,7 @@
 "Pin clipboard" = "Fissa gli appunti";
 "Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "Impossibile attivare %@ (fissa gli appunti). Forse lo usa un’altra app.";
 "Two shortcuts are the same: only the first one will work." = "Due abbreviazioni sono uguali: funzionerà solo la prima.";
+
+"Pinny was updated" = "Pinny è stato aggiornato";
+"macOS asks for the permission again after every Pinny update. It’s expected and only takes a moment: click “Repair permission” and turn Pinny on again." = "macOS richiede di nuovo il permesso dopo ogni aggiornamento di Pinny. È normale e richiede solo un attimo: fai clic su «Ripara permesso» e riattiva Pinny.";
+"Repair permission…" = "Ripara permesso…";

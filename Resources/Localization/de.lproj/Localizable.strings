@@ -126,3 +126,7 @@
 "Pin clipboard" = "Zwischenablage anheften";
 "Couldn’t turn on %@ (pin clipboard). Another app may be using it." = "%@ (Zwischenablage anheften) konnte nicht aktiviert werden. Möglicherweise verwendet eine andere App diese Kombination.";
 "Two shortcuts are the same: only the first one will work." = "Zwei Kurzbefehle sind gleich: Nur der erste funktioniert.";
+
+"Pinny was updated" = "Pinny wurde aktualisiert";
+"macOS asks for the permission again after every Pinny update. It’s expected and only takes a moment: click “Repair permission” and turn Pinny on again." = "macOS fragt nach jedem Pinny-Update erneut nach der Berechtigung. Das ist normal und dauert nur einen Moment: Klicke auf „Berechtigung reparieren“ und aktiviere Pinny erneut.";
+"Repair permission…" = "Berechtigung reparieren …";

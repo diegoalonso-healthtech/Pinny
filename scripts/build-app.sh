@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Compila Pinny y lo empaqueta como Pinny.app en ./build
 #
-# Firma: por defecto ad-hoc ("-"). Con ad-hoc, macOS pide de nuevo el permiso de
-# Accesibilidad tras cada recompilación. Para evitarlo, crea un certificado de firma
-# de código autofirmado en el Llavero y úsalo así:
-#   SIGN_IDENTITY="Nombre de tu certificado" ./scripts/build-app.sh
+# Firma: por defecto ad-hoc ("-"). macOS ata entonces el permiso a esta compilación
+# exacta: tras cada recompilación hay que volver a darlo (Reparar permiso), pero una
+# copia modificada nunca lo hereda. Se puede firmar con un certificado propio:
+#   SIGN_IDENTITY="Nombre del certificado" ./scripts/build-app.sh
+# Ojo: quien tenga su clave privada podría firmar apps que hereden el permiso.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 

@@ -1,0 +1,71 @@
+# Compila Pinny en los servidores de GitHub y adjunta el DMG a la versión.
+#
+# Se lanza al subir una etiqueta vX.Y.Z (git tag v1.1.0 && git push origin v1.1.0)
+# o a mano desde la pestaña Actions.
+#
+# Seguridad:
+# - No usa ninguna clave ni secreto propio: la app se firma ad-hoc, como en local.
+# - Genera una «attestation» de procedencia (Sigstore): una prueba firmada de que el
+#   DMG salió de este repositorio y de este flujo, sin manipular. Se comprueba con
+#   gh attestation verify Pinny-X.Y.Z.dmg --repo <usuario>/Pinny
+# - Publica también la huella SHA-256 del DMG.
+# - Si la versión no existe, la crea como borrador para que revises las notas y la
+#   publiques tú. Si ya existe, solo añade o sustituye los archivos.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Etiqueta de la versión (p. ej. v1.1.0)"
+        required: true
+
+permissions:
+  contents: write          # crear la versión y subir archivos
+  id-token: write          # firmar la attestation (Sigstore)
+  attestations: write      # guardar la attestation
+  artifact-metadata: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      TAG: ${{ github.event.inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ env.TAG }}
+
+      - name: Comprobar que la etiqueta coincide con la versión de la app
+        run: |
+          VERSION="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Resources/Info.plist)"
+          if [ "v$VERSION" != "$TAG" ]; then
+            echo "La etiqueta $TAG no coincide con la versión $VERSION de Info.plist" >&2
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - name: Compilar
+        run: ./scripts/build-app.sh
+
+      - name: Crear el DMG
+        run: |
+          brew install create-dmg || true
+          ./scripts/make-dmg.sh
+
+      - name: Attestation de procedencia
+        uses: actions/attest@v4
+        with:
+          subject-path: build/Pinny-${{ env.VERSION }}.dmg
+
+      - name: Subir a la versión
+        run: |
+          FILES="build/Pinny-$VERSION.dmg build/Pinny-$VERSION.dmg.sha256"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" $FILES --clobber
+          else
+            gh release create "$TAG" $FILES --draft --title "Pinny $VERSION" --generate-notes
+          fi
