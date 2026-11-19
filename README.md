@@ -15,6 +15,8 @@ Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't ru
 
 > Version **1.0.0**. Text only. The app interface is in Spanish for now; English is coming in a future version, together with encrypted sync.
 
+<p align="center"><img src="docs/images/quick-menu.png" alt="Pinny quick menu: Pins › Work folder › saved text, opened with Control-Option-V in a mail window" width="760"></p>
+
 ## Features
 
 - **History** of everything you copy (last 20 items by default, up to 2,000).
@@ -29,7 +31,12 @@ Pinny is a free, open-source clipboard manager **for macOS only** (it doesn't ru
   ```
   Pick an item and Pinny pastes it into the active app.
 - **Search panel (⌃⌥⇧V):** ↑ ↓ to move, Return to paste, ⌘1…⌘9 for the first nine, Esc to close. Manage pins and folders from here.
+
+<p align="center"><img src="docs/images/search-panel.png" alt="Pinny search panel filtering pins and recent items, with keyboard shortcuts" width="680"></p>
+
 - **Modifier + right-click (optional):** hold ⌘ (configurable) and right-click to open Pinny's menu anywhere, even in apps that don't support macOS Services. Without the key, right-click works as usual.
+<p align="center"><img src="docs/images/right-click.png" alt="Holding Command and right-clicking in Notes opens Pinny's menu with recent items" width="680"></p>
+
 - **macOS Services:** *Pinny: Pines*, *Pinny: Recientes*, *Pinny: Buscar en todo* in right-click → Services.
 - **Keeps your clipboard:** after pasting a pin, whatever you had copied is restored.
 - **Privacy first:** everything stays on your Mac (`~/Library/Application Support/Pinny`, owner-only permissions). No network. Skips content that password managers mark as concealed, ignores apps you choose, and limits item size.
@@ -89,6 +96,8 @@ You can reopen the guide from the menu bar icon → *Guía de configuración…*
 
 - From the app: menu bar icon → **Desinstalar Pinny…** You can choose to keep or delete your history, pins and settings.
 - From Terminal: `./scripts/uninstall.sh` (keeps your data) or `./scripts/uninstall.sh --purge` (deletes everything).
+
+<sub>Images are illustrations of the app; the interface is currently in Spanish.</sub>
 
 ## Known limitations
 
